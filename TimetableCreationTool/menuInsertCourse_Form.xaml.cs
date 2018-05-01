@@ -16,53 +16,49 @@ using System.Windows.Shapes;
 namespace TimetableCreationTool
 {
     /// <summary>
-    /// Interaction logic for menuInsertRoom_Form.xaml
+    /// Interaction logic for menuInsertCourse_Form.xaml
     /// </summary>
-    public partial class menuInsertRoom_Form : Window
+    public partial class menuInsertCourse_Form : Window
     {
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
-        public menuInsertRoom_Form()
+        public menuInsertCourse_Form()
         {
             InitializeComponent();
-            roomIsLabCombobox.Items.Add("true");
-            roomIsLabCombobox.Items.Add("false");
         }
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
-            
-            
-            string roomCode = roomCodeTextbox.Text;
-            string roomCapString = roomCapacityTextbox.Text;
-            
+            string courseCode = courseCodeTextbox.Text;
+            string courseName = courseNameTextbox.Text;
+            string noOfStudentsString = noOfStudentsTextbox.Text;
 
-            if(roomCode != null && roomCapString != null && roomIsLabCombobox.SelectedItem != null)
+            if (courseCode != "" && courseName != "" && noOfStudentsString != "")
             {
-                bool isLab = bool.Parse(roomIsLabCombobox.Text);
-                int roomCap;
-                if(roomCode.Length < 11 && int.TryParse(roomCapString, out roomCap))
+                int noOfStudents;
+                if (courseCode.Length < 16 && courseName.Length < 76 && int.TryParse(noOfStudentsString, out noOfStudents))
                 {
                     SqlConnection conn = new SqlConnection(dbConnectionString);
                     conn.Open();
-                    SqlCommand command = new SqlCommand("INSERT INTO dbo.roomTemp(roomCode, capacity, lab) values(@roomCode, @capacity, @islab);", conn);
-                    command.Parameters.AddWithValue("@roomCode", roomCode);
-                    command.Parameters.AddWithValue("@capacity", roomCap);
-                    command.Parameters.AddWithValue("@islab", isLab);
+                    SqlCommand command = new SqlCommand("INSERT INTO dbo.courseTemp(courseCode, courseName, noOfStudents) values(@courseCode, @courseName, @noOfStudents);", conn);
+                    command.Parameters.AddWithValue("@courseCode", courseCode);
+                    command.Parameters.AddWithValue("@courseName", courseName);
+                    command.Parameters.AddWithValue("@noOfStudents", noOfStudents);
+
 
                     command.ExecuteNonQuery();
 
-                    int number = selectIntoDistinct("INSERT dbo.Room(roomCode, capacity, lab) SELECT roomCode, capacity, lab FROM dbo.roomTemp rt WHERE not exists(SELECT * FROM dbo.Room r WHERE rt.roomCode = r.roomCode); ");
+                    int number = selectIntoDistinct("INSERT dbo.Course(courseCode,courseName,noOfStudents) SELECT courseCode,courseName,noOfStudents FROM dbo.courseTemp ct WHERE not exists(SELECT * FROM dbo.Course c WHERE ct.courseCode = c.courseCode);");
 
                     if (number == 1)
                     {
                         this.Close();
-                        truncateTempAfterInsert("TRUNCATE TABLE dbo.roomTemp;");
+                        truncateTempAfterInsert("TRUNCATE TABLE dbo.courseTemp;");
                     }
                     else
                     {
 
-                        MessageBox.Show("Room already exists");
+                        MessageBox.Show("Course already exists");
                     }
 
 
@@ -70,7 +66,7 @@ namespace TimetableCreationTool
                 }
                 else
                 {
-                    MessageBox.Show("Room Capacity must be a number and Room code can't be longer than 10 characters");
+                    MessageBox.Show("Course code can't be greater than 15 characters and course name can't be greater than 75 characters and number of students must be a number");
 
                 }
             }
@@ -78,10 +74,10 @@ namespace TimetableCreationTool
             {
                 MessageBox.Show("fields can't be empty");
             }
-                
 
 
-           
+
+
         }
 
         public int selectIntoDistinct(string query)
@@ -122,8 +118,6 @@ namespace TimetableCreationTool
 
             }
         }
-
-
-
     }
 }
+

@@ -16,53 +16,49 @@ using System.Windows.Shapes;
 namespace TimetableCreationTool
 {
     /// <summary>
-    /// Interaction logic for menuInsertRoom_Form.xaml
+    /// Interaction logic for menuInsertModule_Form.xaml
     /// </summary>
-    public partial class menuInsertRoom_Form : Window
+    /// 
+
+    public partial class menuInsertModule_Form : Window
     {
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
-        public menuInsertRoom_Form()
+        public menuInsertModule_Form()
         {
             InitializeComponent();
-            roomIsLabCombobox.Items.Add("true");
-            roomIsLabCombobox.Items.Add("false");
         }
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
-            
-            
-            string roomCode = roomCodeTextbox.Text;
-            string roomCapString = roomCapacityTextbox.Text;
-            
+            string moduleCode = moduleCodeTextbox.Text;
+            string moduleName = moduleNameTextbox.Text;
 
-            if(roomCode != null && roomCapString != null && roomIsLabCombobox.SelectedItem != null)
+            if (moduleCode != "" && moduleName != "" )
             {
-                bool isLab = bool.Parse(roomIsLabCombobox.Text);
-                int roomCap;
-                if(roomCode.Length < 11 && int.TryParse(roomCapString, out roomCap))
+                
+                if (moduleCode.Length < 16 && moduleName.Length < 76)
                 {
                     SqlConnection conn = new SqlConnection(dbConnectionString);
                     conn.Open();
-                    SqlCommand command = new SqlCommand("INSERT INTO dbo.roomTemp(roomCode, capacity, lab) values(@roomCode, @capacity, @islab);", conn);
-                    command.Parameters.AddWithValue("@roomCode", roomCode);
-                    command.Parameters.AddWithValue("@capacity", roomCap);
-                    command.Parameters.AddWithValue("@islab", isLab);
+                    SqlCommand command = new SqlCommand("INSERT INTO dbo.moduleTemp(moduleCode, moduleName) values(@moduleCode, @moduleName);", conn);
+                    command.Parameters.AddWithValue("@moduleCode", moduleCode);
+                    command.Parameters.AddWithValue("@moduleName", moduleName);
+                    
 
                     command.ExecuteNonQuery();
 
-                    int number = selectIntoDistinct("INSERT dbo.Room(roomCode, capacity, lab) SELECT roomCode, capacity, lab FROM dbo.roomTemp rt WHERE not exists(SELECT * FROM dbo.Room r WHERE rt.roomCode = r.roomCode); ");
+                    int number = selectIntoDistinct("INSERT dbo.Module(moduleCode, moduleName) SELECT moduleCode, moduleName FROM dbo.moduleTemp mt WHERE not exists(SELECT * FROM dbo.Module m WHERE mt.moduleCode = m.moduleCode);");
 
                     if (number == 1)
                     {
                         this.Close();
-                        truncateTempAfterInsert("TRUNCATE TABLE dbo.roomTemp;");
+                        truncateTempAfterInsert("TRUNCATE TABLE dbo.moduleTemp;");
                     }
                     else
                     {
 
-                        MessageBox.Show("Room already exists");
+                        MessageBox.Show("Module already exists");
                     }
 
 
@@ -70,7 +66,7 @@ namespace TimetableCreationTool
                 }
                 else
                 {
-                    MessageBox.Show("Room Capacity must be a number and Room code can't be longer than 10 characters");
+                    MessageBox.Show("Module code can't be greater than 15 characters and moduleName can't be greater than 75 characters");
 
                 }
             }
@@ -78,10 +74,10 @@ namespace TimetableCreationTool
             {
                 MessageBox.Show("fields can't be empty");
             }
-                
 
 
-           
+
+
         }
 
         public int selectIntoDistinct(string query)
@@ -122,8 +118,6 @@ namespace TimetableCreationTool
 
             }
         }
-
-
-
+    
     }
 }

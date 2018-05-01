@@ -110,6 +110,12 @@
     <Compile Include="lecturerTemp.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
+    <Compile Include="menuInsertCourse_Form.xaml.cs">
+      <DependentUpon>menuInsertCourse_Form.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="menuInsertModule_Form.xaml.cs">
+      <DependentUpon>menuInsertModule_Form.xaml</DependentUpon>
+    </Compile>
     <Compile Include="menuInsertRoom_Form.xaml.cs">
       <DependentUpon>menuInsertRoom_Form.xaml</DependentUpon>
     </Compile>
@@ -201,6 +207,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="menuInsertCourse_Form.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="menuInsertModule_Form.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="menuInsertRoom_Form.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

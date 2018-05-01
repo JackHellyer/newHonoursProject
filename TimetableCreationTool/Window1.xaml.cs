@@ -122,11 +122,30 @@ namespace TimetableCreationTool
             addRoom.Owner = this;
             addRoom.ShowDialog();
             
-            
+    
+        }
+
+        private void menuInsertModuleForm_Click(object sender, RoutedEventArgs e)
+        {
+            menuInsertModule_Form addModule = new menuInsertModule_Form();
+            addModule.Owner = this;
+            addModule.ShowDialog();
+
+
 
         }
 
-       
+        private void menuInsertCourseForm_Click(object sender, RoutedEventArgs e)
+        {
+            menuInsertCourse_Form addCourse = new menuInsertCourse_Form();
+            addCourse.Owner = this;
+            addCourse.ShowDialog();
+
+
+
+        }
+
+
 
         private void menuLecturersCSV_Click(object sender, RoutedEventArgs e)
         {

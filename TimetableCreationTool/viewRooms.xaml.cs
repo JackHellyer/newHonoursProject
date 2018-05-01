@@ -69,10 +69,7 @@ namespace TimetableCreationTool
 
         }
 
-        private void onEdit(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void roomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

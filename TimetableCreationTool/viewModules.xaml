@@ -41,6 +41,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="165,229,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="50,229,0,0" VerticalAlignment="Top" Width="75" Click="OnDelete"/>
 
     </Grid>
 </Window>

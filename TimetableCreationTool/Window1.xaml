@@ -37,11 +37,11 @@
                     </MenuItem>
                     <MenuItem x:Name="insertCourses" Header="Add Courses" HorizontalAlignment="Left">
                         <MenuItem x:Name="coursesCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuCoursesCSV_Click"/>
-                        <MenuItem x:Name="coursesManual" Header="Add using form" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="coursesManual" Header="Add using form" HorizontalAlignment="Left" Click="menuInsertCourseForm_Click"/>
                     </MenuItem>
-                    <MenuItem x:Name="insertModules" Header="Add Modules" HorizontalAlignment="Left" Click="menuModulesCSV_Click">
-                        <MenuItem x:Name="modulesCSV" Header="Add using CSV file" HorizontalAlignment="Left"/>
-                        <MenuItem x:Name="modulesManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="insertModules" Header="Add Modules" HorizontalAlignment="Left" >
+                        <MenuItem x:Name="modulesCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuModulesCSV_Click"/>
+                        <MenuItem x:Name="modulesManual" Header="Add using form" HorizontalAlignment="Left" Click="menuInsertModuleForm_Click"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>

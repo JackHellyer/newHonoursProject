@@ -31,13 +31,45 @@ namespace TimetableCreationTool
         {
             this.dbcontext = new timetableCreationEntities3();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
+            refreshListView();
+            
+        }
 
+        private void refreshListView()
+        {
             var query = from Module in this.dbcontext.Modules
                         orderby Module.moduleCode
                         select Module;
             this.moduleViewSource.Source = query.ToList();
         }
+        private void OnDelete(object sender, RoutedEventArgs e)
+        {
 
-        
+            object selected = this.moduleListView.SelectedItem;
+
+            if (selected == null)
+            {
+                MessageBox.Show("No Module Selected");
+                return;
+            }
+            else
+            {
+                try
+                {
+                    this.dbcontext.Modules.Remove((Module)selected);
+                    this.dbcontext.SaveChanges();
+                    refreshListView();
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.ToString());
+                    MessageBox.Show("Can't delete module as it's being used by a timetable");
+                }
+
+            }
+
+        }
+
+
     }
 }
