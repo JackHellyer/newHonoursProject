@@ -32,14 +32,46 @@ namespace TimetableCreationTool
             this.dbcontext = new timetableCreationEntities3();
             this.coursesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("coursesViewSource")));
 
+
+            refreshListView();
+            
+
+            
+        }
+
+        private void refreshListView()
+        {
             var query = from Course in this.dbcontext.Courses
                         orderby Course.courseCode
                         select Course;
             this.coursesViewSource.Source = query.ToList();
+        }
+        private void OnDelete(object sender, RoutedEventArgs e)
+        {
 
-            
+            object selected = this.coursesListView.SelectedItem;
 
-            
+            if (selected == null)
+            {
+                MessageBox.Show("No Course Selected");
+                return;
+            }
+            else
+            {
+                try
+                {
+                    this.dbcontext.Courses.Remove((Course)selected);
+                    this.dbcontext.SaveChanges();
+                    refreshListView();
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.ToString());
+                    MessageBox.Show("Can't delete course as it's being used by a timetable");
+                }
+
+            }
+
         }
     }
 }

@@ -105,30 +105,47 @@ namespace TimetableCreationTool
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
+
             object selected = this.moduleListView.SelectedItem;
-            //if there isn't an order selected, show message and return
-            if (selected == null)
+            Module module = (Module)selected;
+            if(selected == null)
             {
                 MessageBox.Show("No module selected");
                 return;
+               
             }
-            Module module = (Module)selected;
-
-
             int mId = module.moduleId;
 
-            string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ";";
+            
 
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
-            SqlCommand command = new SqlCommand(query, conn);
-            command.ExecuteNonQuery();
+
+            SqlCommand checkModulebeingused = new SqlCommand("SELECT COUNT(*) FROM dbo.timetable WHERE courseId = @courseId AND moduleId = @moduleId;", conn);
+            checkModulebeingused.Parameters.AddWithValue("@courseId", cId);
+            checkModulebeingused.Parameters.AddWithValue("@moduleId", mId);
+
+            int moduleBeingUsed = (int)checkModulebeingused.ExecuteScalar();
+
+            if(moduleBeingUsed > 0)
+            {
+                MessageBox.Show("can't delete module as it's being used by current course");
+            }
+            else
+            {
+                string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ";";
+
+                SqlCommand command = new SqlCommand(query, conn);
+                command.ExecuteNonQuery();
+                
+
+                onRefresh();
+                //MessageBox.Show(mId.ToString());
+
+                //onRefresh();
+            }
+
             conn.Close();
-
-            onRefresh();
-            //MessageBox.Show(mId.ToString());
-
-            onRefresh();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

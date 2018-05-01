@@ -56,7 +56,7 @@ namespace TimetableCreationTool
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
             saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
-            saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
+            saveDbToCSVFile("lecturerCode,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
             saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
             saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
@@ -145,6 +145,16 @@ namespace TimetableCreationTool
 
         }
 
+        private void menuInsertLecturerForm_Click(object sender, RoutedEventArgs e)
+        {
+            menuInsertLecturer_Form addLecturer = new menuInsertLecturer_Form();
+            addLecturer.Owner = this;
+            addLecturer.ShowDialog();
+
+
+
+        }
+
 
 
         private void menuLecturersCSV_Click(object sender, RoutedEventArgs e)
@@ -152,7 +162,7 @@ namespace TimetableCreationTool
             insertLecturerCSV ilc = new insertLecturerCSV(timetableName);
             ilc.Owner = this;
             string fileName = "lecturers.txt";
-            string tableColumns = "lecturerId,lecturerName,lecturerDept";
+            string tableColumns = "lecturerCode,lecturerName,lecturerDept";
             createExampleCSVFile(fileName, tableColumns);
             ilc.ShowDialog();
         }
@@ -323,7 +333,7 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
-                saveDbToCSVFile("courseId, moduleId, lecturerId, roomId, day, time", "timetable.txt", "dbo.Timetable");
+                saveDbToCSVFile("courseId, moduleId, lecturerCode, roomId, day, time", "timetable.txt", "dbo.Timetable");
                 saveDbToCSVFile("lecturerId, moduleId", "lecturermodules.txt", "dbo.Lecturer_Module");
             }
         }
@@ -486,6 +496,7 @@ namespace TimetableCreationTool
                                 if ((day2 == day) && (time == timeString) && (dr[dc].ToString() == ""))
                                 {
                                     insertTimetable it = new insertTimetable(day, timeString, cId, cName);
+                                    it.Owner = this;
                                     it.ShowDialog();
 
                                     
@@ -514,7 +525,7 @@ namespace TimetableCreationTool
                                                 //line below inserts into cell
                                                 dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
 
-
+                                                conn.Close();
                                             }
 
 
@@ -523,10 +534,15 @@ namespace TimetableCreationTool
 
 
                                 }
-                                else
+                                if((day2 == day) && (time == timeString) && (dr[dc].ToString() != "") && (dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                                 {
-                                    //add dialog box to allow user to edit, maybe try drag and drop
+                                    editTimetable editTtable = new editTimetable();
+                                    editTtable.Owner = this;
+                                    editTtable.ShowDialog();
                                 }
+
+                                
+
                             }
                         }
                     }

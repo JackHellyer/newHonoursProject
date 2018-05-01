@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="insertTimetable" Height="300" Width="300">
+        Title="Insert Timetable" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="172,232,0,0" VerticalAlignment="Top" Width="74" Click="saveButton_Click"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="44,232,0,0" VerticalAlignment="Top" Width="76" Click="cancelButton_Click"/>

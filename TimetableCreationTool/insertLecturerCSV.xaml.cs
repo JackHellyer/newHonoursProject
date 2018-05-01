@@ -125,7 +125,7 @@ namespace TimetableCreationTool
 
         public void selectIntoDistinct()
         {
-            string queryString = "SET IDENTITY_INSERT dbo.Lecturer ON; INSERT dbo.Lecturer(lecturerId,lecturerName,lecturerDept) SELECT lecturerId,lecturerName,lecturerDept FROM dbo.lecturerTemp lt WHERE not exists(SELECT * FROM dbo.Lecturer l WHERE lt.lecturerId = l.lecturerId);";
+            string queryString = "INSERT dbo.Lecturer(lecturerCode,lecturerName,lecturerDept) SELECT lecturerCode,lecturerName,lecturerDept FROM dbo.lecturerTemp lt WHERE not exists(SELECT * FROM dbo.Lecturer l WHERE lt.lecturerCode = l.lecturerCode);";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 

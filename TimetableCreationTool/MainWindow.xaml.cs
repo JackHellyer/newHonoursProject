@@ -248,7 +248,7 @@ namespace TimetableCreationTool
 
         public void truncateAllTables()
         {
-            string queryString = "TRUNCATE TABLE dbo.Course_Module; TRUNCATE TABLE dbo.Lecturer_Module; TRUNCATE TABLE dbo.Timetable; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0); DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
+            string queryString = "TRUNCATE TABLE dbo.Course_Module; TRUNCATE TABLE dbo.Lecturer_Module; TRUNCATE TABLE dbo.Timetable; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0); DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0); TRUNCATE TABLE dbo.lecturerTemp;";
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 

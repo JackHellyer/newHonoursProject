@@ -89,6 +89,9 @@
     <Compile Include="courseTemp.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
+    <Compile Include="editTimetable.xaml.cs">
+      <DependentUpon>editTimetable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="insertCourseCSV.xaml.cs">
       <DependentUpon>insertCourseCSV.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,9 @@
     </Compile>
     <Compile Include="menuInsertCourse_Form.xaml.cs">
       <DependentUpon>menuInsertCourse_Form.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="menuInsertLecturer_Form.xaml.cs">
+      <DependentUpon>menuInsertLecturer_Form.xaml</DependentUpon>
     </Compile>
     <Compile Include="menuInsertModule_Form.xaml.cs">
       <DependentUpon>menuInsertModule_Form.xaml</DependentUpon>
@@ -175,6 +181,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="editTimetable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="insertCourseCSV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +218,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="menuInsertCourse_Form.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="menuInsertLecturer_Form.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
