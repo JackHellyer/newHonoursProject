@@ -1,0 +1,58 @@
+﻿<Window x:Class="TimetableCreationTool.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimetableCreationTool"
+        mc:Ignorable="d"
+        Title= "" Height="500" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
+        Loaded="createDatatable"
+        >
+
+    <Grid>
+        <StackPanel VerticalAlignment="Top">
+            <Menu Width="Auto" Height="20">
+                <MenuItem Header="_File">
+                    <MenuItem x:Name="saveTimetable" Header="Save Timetable" HorizontalAlignment="Left" Click="menuSave_Click"/>
+                    <MenuItem x:Name="loadTimetabe" Header="Load Timetable" HorizontalAlignment="Left"/>
+                    <MenuItem x:Name="exitApp" Header="_Exit" HorizontalAlignment="Left" Width="140" Click="menuExit_Click"/>
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem x:Name="viewRooms" Header="View List of Rooms" HorizontalAlignment="Left" Click="menuViewRooms_Click"/>
+                    <MenuItem x:Name="viewLecturers" Header="View List of Lecturers" HorizontalAlignment="Left" Click="menuViewLecturers_Click"/>
+                    <MenuItem x:Name="viewCourses" Header="View List of Courses" HorizontalAlignment="Left" Click="menuViewCourses_Click"/>
+                    <MenuItem x:Name="viewModules" Header="View List of Modules" HorizontalAlignment="Left" Click="menuViewModules_Click"/>
+
+                </MenuItem>
+                <MenuItem Header="_Insert">
+                    <MenuItem x:Name="insertRooms" Header="Add Rooms" HorizontalAlignment="Left">
+                        <MenuItem x:Name="roomsCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuInsertRoomCSV_Click"/>
+                        <MenuItem x:Name="roomsManual" Header="Add using form" HorizontalAlignment="Left" Click="menuInsertRoomForm_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="insertLecturer" Header="Add Lecturers" HorizontalAlignment="Left">
+                        <MenuItem x:Name="lecturersCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuLecturersCSV_Click"/>
+                        <MenuItem x:Name="lecturersManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                    <MenuItem x:Name="insertCourses" Header="Add Courses" HorizontalAlignment="Left">
+                        <MenuItem x:Name="coursesCSV" Header="Add using CSV file" HorizontalAlignment="Left" Click="menuCoursesCSV_Click"/>
+                        <MenuItem x:Name="coursesManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                    <MenuItem x:Name="insertModules" Header="Add Modules" HorizontalAlignment="Left" Click="menuModulesCSV_Click">
+                        <MenuItem x:Name="modulesCSV" Header="Add using CSV file" HorizontalAlignment="Left"/>
+                        <MenuItem x:Name="modulesManual" Header="Add using form" HorizontalAlignment="Left"/>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <DataGrid x:Name="dataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="51,126,0,0" ItemsSource="{Binding}" VerticalAlignment="Top" Height="290" Width="787" SelectionMode="Single" SelectionUnit="Cell" SelectedCellsChanged="dataGrid_SelectedCellsChanged"/>
+        <ComboBox x:Name="chooseCourse" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="chooseCourse_DropDownClosed"/>
+        <Label x:Name="label" Content="Select Course" HorizontalAlignment="Left" Margin="38,76,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="assignLecturerButton" Content="Assign Modules Taught By Lecturers" HorizontalAlignment="Left" Margin="502,76,0,0" VerticalAlignment="Top" Width="202" Click="assignLecturerButton_Click"/>
+
+
+
+
+    </Grid>
+</Window>

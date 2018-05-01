@@ -1,0 +1,50 @@
+﻿<Window x:Class="TimetableCreationTool.assignLecturer_Module"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimetableCreationTool"
+        mc:Ignorable="d"
+        Title="assignLecturer_Module" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner"
+        >
+    <Window.Resources>
+        <CollectionViewSource x:Key="moduleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Module}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource moduleViewSource}" Margin="0,0,2,-2">
+        <ListView x:Name="moduleListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="150" Margin="15,66,17,0" VerticalAlignment="Top" Width="258">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="moduleCodeColumn" Header="Module Code" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label BorderThickness="0" Padding="2" Content="{Binding moduleCode, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn x:Name="moduleNameColumn" Header="Module Name" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="2" BorderThickness="0" Content="{Binding moduleName, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ComboBox x:Name="lecturerComboBox" HorizontalAlignment="Left" Text="Lecturers" Margin="16,21,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="lecturerComboBox_DropDownClosed"/>
+        <Label x:Name="label" Content="Current Modules Taught Selected Lecturer" HorizontalAlignment="Left" Margin="16,43,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="modulecomboBox" HorizontalAlignment="Left" Margin="16,237,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button" Content="Add Module Taught" HorizontalAlignment="Left" Margin="156,237,0,0" VerticalAlignment="Top" Width="117" Click="button_Click"/>
+    </Grid>
+</Window>
+

@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseId" />
+          </Key>
+          <Property Name="courseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="courseCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="courseName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="noOfStudents" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course_Module">
+          <Key>
+            <PropertyRef Name="courseId" />
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="courseId" Type="int" Nullable="false" />
+          <Property Name="moduleId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'timetableCreation.dbo.courseTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="courseTemp">
+          <Key>
+            <PropertyRef Name="courseCode" />
+            <PropertyRef Name="courseName" />
+            <PropertyRef Name="noOfStudents" />
+          </Key>
+          <Property Name="courseCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="courseName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="noOfStudents" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+          </Key>
+          <Property Name="lecturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lecturer_Module">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="moduleId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'timetableCreation.dbo.lecturerTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="lecturerTemp">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+            <PropertyRef Name="lecturerName" />
+            <PropertyRef Name="lecturerDept" />
+          </Key>
+          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="moduleCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="moduleName" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'timetableCreation.dbo.moduleTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="moduleTemp">
+          <Key>
+            <PropertyRef Name="moduleCode" />
+            <PropertyRef Name="moduleName" />
+          </Key>
+          <Property Name="moduleCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="moduleName" Type="varchar" MaxLength="75" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomId" />
+          </Key>
+          <Property Name="roomId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roomCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+          <Property Name="lab" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="roomTemp">
+          <Key>
+            <PropertyRef Name="roomCode" />
+            <PropertyRef Name="capacity" />
+            <PropertyRef Name="lab" />
+          </Key>
+          <Property Name="roomCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+          <Property Name="lab" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Timetable">
+          <Key>
+            <PropertyRef Name="tId" />
+            <PropertyRef Name="courseId" />
+            <PropertyRef Name="moduleId" />
+            <PropertyRef Name="roomId" />
+          </Key>
+          <Property Name="tId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="courseId" Type="int" Nullable="false" />
+          <Property Name="moduleId" Type="int" Nullable="false" />
+          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="roomId" Type="int" Nullable="false" />
+          <Property Name="time" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="day" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="duration" Type="int" />
+        </EntityType>
+        <Association Name="FK_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="courseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Module">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Course_Module" Type="Self.Course_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseId" />
+            </Principal>
+            <Dependent Role="Course_Module">
+              <PropertyRef Name="courseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lecturer">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="lecturerId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="lecturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lecturer_Module">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Lecturer_Module" Type="Self.Lecturer_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="lecturerId" />
+            </Principal>
+            <Dependent Role="Lecturer_Module">
+              <PropertyRef Name="lecturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lecturer_Module2">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Lecturer_Module" Type="Self.Lecturer_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="Lecturer_Module">
+              <PropertyRef Name="moduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Course_Module" Type="Self.Course_Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="Course_Module">
+              <PropertyRef Name="moduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="timetableCreationModel1StoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course_Module" EntityType="Self.Course_Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer_Module" EntityType="Self.Lecturer_Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timetable" EntityType="Self.Timetable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="courseTemp" EntityType="Self.courseTemp" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [courseTemp].[courseCode] AS [courseCode], 
+    [courseTemp].[courseName] AS [courseName], 
+    [courseTemp].[noOfStudents] AS [noOfStudents]
+    FROM [dbo].[courseTemp] AS [courseTemp]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="lecturerTemp" EntityType="Self.lecturerTemp" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [lecturerTemp].[lecturerId] AS [lecturerId], 
+    [lecturerTemp].[lecturerName] AS [lecturerName], 
+    [lecturerTemp].[lecturerDept] AS [lecturerDept]
+    FROM [dbo].[lecturerTemp] AS [lecturerTemp]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="moduleTemp" EntityType="Self.moduleTemp" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [moduleTemp].[moduleCode] AS [moduleCode], 
+    [moduleTemp].[moduleName] AS [moduleName]
+    FROM [dbo].[moduleTemp] AS [moduleTemp]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="roomTemp" EntityType="Self.roomTemp" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [roomTemp].[roomCode] AS [roomCode], 
+    [roomTemp].[capacity] AS [capacity], 
+    [roomTemp].[lab] AS [lab]
+    FROM [dbo].[roomTemp] AS [roomTemp]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Course" Association="Self.FK_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Timetable" EntitySet="Timetable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Module" Association="Self.FK_Course_Module">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Course_Module" EntitySet="Course_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lecturer" Association="Self.FK_Lecturer">
+            <End Role="Lecturer" EntitySet="Lecturer" />
+            <End Role="Timetable" EntitySet="Timetable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lecturer_Module" Association="Self.FK_Lecturer_Module">
+            <End Role="Lecturer" EntitySet="Lecturer" />
+            <End Role="Lecturer_Module" EntitySet="Lecturer_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lecturer_Module2" Association="Self.FK_Lecturer_Module2">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Lecturer_Module" EntitySet="Lecturer_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module" Association="Self.FK_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Course_Module" EntitySet="Course_Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room" Association="Self.FK_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Timetable" EntitySet="Timetable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="timetableCreationModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseId" />
+          </Key>
+          <Property Name="courseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="courseCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="courseName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="noOfStudents" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Timetables" Relationship="Self.FK_Course" FromRole="Course" ToRole="Timetable" />
+          <NavigationProperty Name="Modules" Relationship="Self.Course_Module" FromRole="Course" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+          </Key>
+          <Property Name="lecturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lecturerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lecturerDept" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Timetables" Relationship="Self.FK_Lecturer" FromRole="Lecturer" ToRole="Timetable" />
+          <NavigationProperty Name="Modules" Relationship="Self.Lecturer_Module" FromRole="Lecturer" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="moduleCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="moduleName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="Self.Course_Module" FromRole="Module" ToRole="Course" />
+          <NavigationProperty Name="Lecturers" Relationship="Self.Lecturer_Module" FromRole="Module" ToRole="Lecturer" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomId" />
+          </Key>
+          <Property Name="roomId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roomCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <Property Name="lab" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Timetables" Relationship="Self.FK_Room" FromRole="Room" ToRole="Timetable" />
+        </EntityType>
+        <EntityType Name="Timetable">
+          <Key>
+            <PropertyRef Name="tId" />
+            <PropertyRef Name="courseId" />
+            <PropertyRef Name="moduleId" />
+            <PropertyRef Name="roomId" />
+          </Key>
+          <Property Name="tId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="courseId" Type="Int32" Nullable="false" />
+          <Property Name="moduleId" Type="Int32" Nullable="false" />
+          <Property Name="lecturerId" Type="Int32" Nullable="false" />
+          <Property Name="roomId" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="day" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="duration" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Course" FromRole="Timetable" ToRole="Course" />
+          <NavigationProperty Name="Lecturer" Relationship="Self.FK_Lecturer" FromRole="Timetable" ToRole="Lecturer" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_Room" FromRole="Timetable" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="courseTemp">
+          <Key>
+            <PropertyRef Name="courseCode" />
+            <PropertyRef Name="courseName" />
+            <PropertyRef Name="noOfStudents" />
+          </Key>
+          <Property Name="courseCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="courseName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="noOfStudents" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lecturerTemp">
+          <Key>
+            <PropertyRef Name="lecturerId" />
+            <PropertyRef Name="lecturerName" />
+            <PropertyRef Name="lecturerDept" />
+          </Key>
+          <Property Name="lecturerId" Type="Int32" Nullable="false" />
+          <Property Name="lecturerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lecturerDept" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="moduleTemp">
+          <Key>
+            <PropertyRef Name="moduleCode" />
+            <PropertyRef Name="moduleName" />
+          </Key>
+          <Property Name="moduleCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="moduleName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roomTemp">
+          <Key>
+            <PropertyRef Name="roomCode" />
+            <PropertyRef Name="capacity" />
+            <PropertyRef Name="lab" />
+          </Key>
+          <Property Name="roomCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <Property Name="lab" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="courseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lecturer">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="lecturerId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="lecturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Timetable" Type="Self.Timetable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomId" />
+            </Principal>
+            <Dependent Role="Timetable">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Course_Module">
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+        </Association>
+        <Association Name="Lecturer_Module">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="*" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="timetableCreationEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Lecturers" EntityType="Self.Lecturer" />
+          <EntitySet Name="Modules" EntityType="Self.Module" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="Timetables" EntityType="Self.Timetable" />
+          <EntitySet Name="courseTemps" EntityType="Self.courseTemp" />
+          <EntitySet Name="lecturerTemps" EntityType="Self.lecturerTemp" />
+          <EntitySet Name="moduleTemps" EntityType="Self.moduleTemp" />
+          <EntitySet Name="roomTemps" EntityType="Self.roomTemp" />
+          <AssociationSet Name="FK_Course" Association="Self.FK_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Timetable" EntitySet="Timetables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lecturer" Association="Self.FK_Lecturer">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Timetable" EntitySet="Timetables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room" Association="Self.FK_Room">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Timetable" EntitySet="Timetables" />
+          </AssociationSet>
+          <AssociationSet Name="Course_Module" Association="Self.Course_Module">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
+          <AssociationSet Name="Lecturer_Module" Association="Self.Lecturer_Module">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="timetableCreationModel1StoreContainer" CdmEntityContainer="timetableCreationEntities3">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+                <ScalarProperty Name="noOfStudents" ColumnName="noOfStudents" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lecturers">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Lecturer">
+              <MappingFragment StoreEntitySet="Lecturer">
+                <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+                <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
+                <ScalarProperty Name="lecturerDept" ColumnName="lecturerDept" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+                <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+                <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="roomId" ColumnName="roomId" />
+                <ScalarProperty Name="roomCode" ColumnName="roomCode" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="lab" ColumnName="lab" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timetables">
+            <EntityTypeMapping TypeName="timetableCreationModel1.Timetable">
+              <MappingFragment StoreEntitySet="Timetable">
+                <ScalarProperty Name="tId" ColumnName="tId" />
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+                <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+                <ScalarProperty Name="roomId" ColumnName="roomId" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courseTemps">
+            <EntityTypeMapping TypeName="timetableCreationModel1.courseTemp">
+              <MappingFragment StoreEntitySet="courseTemp">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+                <ScalarProperty Name="noOfStudents" ColumnName="noOfStudents" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lecturerTemps">
+            <EntityTypeMapping TypeName="timetableCreationModel1.lecturerTemp">
+              <MappingFragment StoreEntitySet="lecturerTemp">
+                <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+                <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
+                <ScalarProperty Name="lecturerDept" ColumnName="lecturerDept" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="moduleTemps">
+            <EntityTypeMapping TypeName="timetableCreationModel1.moduleTemp">
+              <MappingFragment StoreEntitySet="moduleTemp">
+                <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+                <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roomTemps">
+            <EntityTypeMapping TypeName="timetableCreationModel1.roomTemp">
+              <MappingFragment StoreEntitySet="roomTemp">
+                <ScalarProperty Name="roomCode" ColumnName="roomCode" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="lab" ColumnName="lab" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Course_Module" TypeName="timetableCreationModel1.Course_Module" StoreEntitySet="Course_Module">
+            <EndProperty Name="Course">
+              <ScalarProperty Name="courseId" ColumnName="courseId" />
+            </EndProperty>
+            <EndProperty Name="Module">
+              <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Lecturer_Module" TypeName="timetableCreationModel1.Lecturer_Module" StoreEntitySet="Lecturer_Module">
+            <EndProperty Name="Lecturer">
+              <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+            </EndProperty>
+            <EndProperty Name="Module">
+              <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

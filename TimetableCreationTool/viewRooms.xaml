@@ -1,0 +1,50 @@
+﻿<Window x:Class="TimetableCreationTool.viewRooms"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimetableCreationTool"
+        mc:Ignorable="d"
+        Title="Current Rooms" Height="300" Width="326" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <CollectionViewSource x:Key="roomsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Room}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource roomsViewSource}">
+        <ListView x:Name="roomsListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="39,18,41,0" VerticalAlignment="Top" Width="238" SelectionChanged="roomsListView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="roomCodeColumn" Header="Room Code" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label BorderThickness="0" Padding="2" Content="{Binding roomCode, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="roomCapacityColumn" Header="Capacity" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label  Padding="2" BorderThickness="0" Content="{Binding capacity, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="roomIsLabColumn" Header="Is the Room a Lab" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="2" BorderThickness="0" Content="{Binding lab, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="202,229,0,0" VerticalAlignment="Top" Width="75" Click="OnDelete"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,51 @@
+﻿<Window x:Class="TimetableCreationTool.viewCourses"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimetableCreationTool"
+        mc:Ignorable="d"
+        Title="viewCourses" Height="300" Width="300" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <CollectionViewSource x:Key="coursesViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Course}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource coursesViewSource}">
+        <ListView x:Name="coursesListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    
+                    <GridViewColumn x:Name="courseIdcolumn" Header="Course Code" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label BorderThickness="0" Padding="2" Content="{Binding courseCode, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="courseNameColumn" Header="Name" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label  Padding="2" BorderThickness="0" Content="{Binding courseName, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn x:Name="noOfStudents" Header="Number of Students" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="2" BorderThickness="0" Content="{Binding noOfStudents, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                   
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
