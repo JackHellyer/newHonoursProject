@@ -43,7 +43,7 @@ namespace TimetableCreationTool
             DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "lecturers.txt");
             InsertDataTableToSQL(csvData);
             selectIntoDistinct();
-            truncateTempAfterCSVInsert();
+            //truncateTempAfterCSVInsert();
             this.Close();
         }
 
@@ -85,8 +85,8 @@ namespace TimetableCreationTool
             }
             catch (Exception ex)
             {
-                MessageBox.Show("not working");
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show("not working");
+                //MessageBox.Show(ex.Message);
 
             }
             return csvData;

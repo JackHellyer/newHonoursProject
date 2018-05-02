@@ -86,8 +86,8 @@ namespace TimetableCreationTool
             }
             catch (Exception ex)
             {
-                MessageBox.Show("not working");
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show("not working");
+                //MessageBox.Show(ex.Message);
 
             }
             return csvData;

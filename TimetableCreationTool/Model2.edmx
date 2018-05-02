@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="timetableCreationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="courseId" />
@@ -39,6 +39,7 @@ warning 6002: The table/view 'timetableCreation.dbo.courseTemp' does not have a 
             <PropertyRef Name="lecturerId" />
           </Key>
           <Property Name="lecturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lecturerCode" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
         </EntityType>
@@ -54,11 +55,11 @@ warning 6002: The table/view 'timetableCreation.dbo.courseTemp' does not have a 
 warning 6002: The table/view 'timetableCreation.dbo.lecturerTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="lecturerTemp">
           <Key>
-            <PropertyRef Name="lecturerId" />
+            <PropertyRef Name="lecturerCode" />
             <PropertyRef Name="lecturerName" />
             <PropertyRef Name="lecturerDept" />
           </Key>
-          <Property Name="lecturerId" Type="int" Nullable="false" />
+          <Property Name="lecturerCode" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="lecturerName" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="lecturerDept" Type="varchar" MaxLength="75" Nullable="false" />
         </EntityType>
@@ -218,7 +219,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           </EntitySet>
           <EntitySet Name="lecturerTemp" EntityType="Self.lecturerTemp" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [lecturerTemp].[lecturerId] AS [lecturerId], 
+    [lecturerTemp].[lecturerCode] AS [lecturerCode], 
     [lecturerTemp].[lecturerName] AS [lecturerName], 
     [lecturerTemp].[lecturerDept] AS [lecturerDept]
     FROM [dbo].[lecturerTemp] AS [lecturerTemp]</DefiningQuery>
@@ -265,8 +266,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
             <End Role="Timetable" EntitySet="Timetable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="timetableCreationModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -290,6 +290,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           <Property Name="lecturerDept" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Timetables" Relationship="Self.FK_Lecturer" FromRole="Lecturer" ToRole="Timetable" />
           <NavigationProperty Name="Modules" Relationship="Self.Lecturer_Module" FromRole="Lecturer" ToRole="Module" />
+          <Property Name="lecturerCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -342,13 +343,15 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
         </EntityType>
         <EntityType Name="lecturerTemp">
           <Key>
-            <PropertyRef Name="lecturerId" />
+            
             <PropertyRef Name="lecturerName" />
             <PropertyRef Name="lecturerDept" />
+            <PropertyRef Name="lecturerCode" />
           </Key>
-          <Property Name="lecturerId" Type="Int32" Nullable="false" />
+          
           <Property Name="lecturerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lecturerDept" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lecturerCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="moduleTemp">
           <Key>
@@ -462,6 +465,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           <EntitySetMapping Name="Lecturers">
             <EntityTypeMapping TypeName="timetableCreationModel1.Lecturer">
               <MappingFragment StoreEntitySet="Lecturer">
+                <ScalarProperty Name="lecturerCode" ColumnName="lecturerCode" />
                 <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
                 <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
                 <ScalarProperty Name="lecturerDept" ColumnName="lecturerDept" />
@@ -513,7 +517,7 @@ warning 6002: The table/view 'timetableCreation.dbo.roomTemp' does not have a pr
           <EntitySetMapping Name="lecturerTemps">
             <EntityTypeMapping TypeName="timetableCreationModel1.lecturerTemp">
               <MappingFragment StoreEntitySet="lecturerTemp">
-                <ScalarProperty Name="lecturerId" ColumnName="lecturerId" />
+                <ScalarProperty Name="lecturerCode" ColumnName="lecturerCode" />
                 <ScalarProperty Name="lecturerName" ColumnName="lecturerName" />
                 <ScalarProperty Name="lecturerDept" ColumnName="lecturerDept" />
               </MappingFragment>

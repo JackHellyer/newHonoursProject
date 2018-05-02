@@ -333,7 +333,7 @@ namespace TimetableCreationTool
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
-                saveDbToCSVFile("courseId, moduleId, lecturerCode, roomId, day, time", "timetable.txt", "dbo.Timetable");
+                saveDbToCSVFile("courseId, moduleId, lecturerId, roomId, day, time", "timetable.txt", "dbo.Timetable");
                 saveDbToCSVFile("lecturerId, moduleId", "lecturermodules.txt", "dbo.Lecturer_Module");
             }
         }
@@ -429,7 +429,6 @@ namespace TimetableCreationTool
                         dr[dc] = "";
                     }
                     
-                 
                         day = dr[0].ToString();
                         time = dc.ColumnName.ToString();
                         //MessageBox.Show(day + " time: " + time);
@@ -464,6 +463,10 @@ namespace TimetableCreationTool
 
                             }
                         }
+                    
+                    
+                 
+                       
 
 
                     }

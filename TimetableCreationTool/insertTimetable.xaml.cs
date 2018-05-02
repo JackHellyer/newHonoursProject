@@ -118,7 +118,7 @@ namespace TimetableCreationTool
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(moduleCombobox.SelectedItem != null && roomCombobox.SelectedItem != null && lecturercomboBox.SelectedItem != null)
+            if (moduleCombobox.SelectedItem != null && roomCombobox.SelectedItem != null && lecturercomboBox.SelectedItem != null)
             {
                 int courseId = int.Parse(cId);
                 int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
@@ -132,31 +132,63 @@ namespace TimetableCreationTool
                 //INSERT dbo.Timetable(courseId, moduleId, roomId, day, time) SELECT @courseId, @moduleId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, roomId, day, time FROM dbo.Timetable WHERE(courseId = @courseId AND moduleId = @moduleId) AND(roomId = @roomId AND day = @day AND time = @time));
 
 
-               SqlConnection conn = new SqlConnection(dbConnectionString);
+                SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
-                SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, lecturerId, roomId, day, time) SELECT @courseId, @moduleId, @lecturerId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, lecturerId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
-                command.Parameters.AddWithValue("@courseId", courseId);
-                command.Parameters.AddWithValue("@moduleId", moduleId);
-                command.Parameters.AddWithValue("@roomId", roomId);
-                command.Parameters.AddWithValue("@day", dayTextBox.Text);
-                command.Parameters.AddWithValue("@time", timeTextBox.Text);
-                command.Parameters.AddWithValue("@lecturerId", lecturerId);
-                int numOfRowsEffected = command.ExecuteNonQuery();
 
-                //command.ExecuteNonQuery();
-                //MessageBox.Show(numOfRowsEffected.ToString());
-                conn.Close();
-                if(numOfRowsEffected == 0)
+                SqlCommand checkRoom = new SqlCommand("SELECT COUNT(*) FROM dbo.timetable WHERE roomId= @roomId AND day = @day AND time = @time;", conn);
+                checkRoom.Parameters.AddWithValue("@roomId", roomId);
+                checkRoom.Parameters.AddWithValue("@day", dayTextBox.Text);
+                checkRoom.Parameters.AddWithValue("@time", timeTextBox.Text);
+
+                int roomBeingUsed = (int)checkRoom.ExecuteScalar();
+
+                SqlCommand checkLecturer = new SqlCommand("SELECT COUNT(*) FROM dbo.Timetable WHERE lecturerId = @lecturerId and day = @day AND time = @time;", conn);
+                checkLecturer.Parameters.AddWithValue("@lecturerId", lecturerId);
+                checkLecturer.Parameters.AddWithValue("@day", dayTextBox.Text);
+                checkLecturer.Parameters.AddWithValue("@time", timeTextBox.Text);
+
+                int lecturerBusy = (int)checkLecturer.ExecuteScalar();
+
+                if (roomBeingUsed > 0)
                 {
-                    MessageBox.Show("Selected Room is in use at specified time and day");
+                    MessageBox.Show("Room being used at selected time");
+                }
+                else if (lecturerBusy > 0)
+                {
+                    MessageBox.Show("Lecturer busy");
                 }
                 else
                 {
-                    MessageBox.Show("Timeslot insert");
-                    this.Close();
+                    SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, lecturerId, roomId, day, time) SELECT @courseId, @moduleId, @lecturerId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, lecturerId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
+                    command.Parameters.AddWithValue("@courseId", courseId);
+                    command.Parameters.AddWithValue("@moduleId", moduleId);
+                    command.Parameters.AddWithValue("@roomId", roomId);
+                    command.Parameters.AddWithValue("@day", dayTextBox.Text);
+                    command.Parameters.AddWithValue("@time", timeTextBox.Text);
+                    command.Parameters.AddWithValue("@lecturerId", lecturerId);
+                    int numOfRowsEffected = command.ExecuteNonQuery();
+
+                    //command.ExecuteNonQuery();
+                    //MessageBox.Show(numOfRowsEffected.ToString());
+                    conn.Close();
+                    if (numOfRowsEffected == 0)
+                    {
+                        MessageBox.Show("Selected Room is in use at specified time and day");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Timeslot insert");
+                        this.Close();
+                    }
                 }
             }
-            
+            else
+            {
+                MessageBox.Show("feilds can't be empty");
+            }
+
+
+
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
