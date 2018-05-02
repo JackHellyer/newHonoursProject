@@ -17,9 +17,9 @@
         <Label x:Name="labelDay" Content="Day" HorizontalAlignment="Left" Margin="31,160,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" Margin="28,191,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="courseNameTextBox" HorizontalAlignment="Left" Height="24" Margin="112,33,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" IsReadOnlyCaretVisible="False" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="moduleCombobox" HorizontalAlignment="Left" Margin="112,70,0,0" VerticalAlignment="Top" Width="120" />
-        <ComboBox x:Name="roomCombobox" HorizontalAlignment="Left" Margin="112,105,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="lecturercomboBox" HorizontalAlignment="Left" Margin="112,134,0,0" VerticalAlignment="Top" Width="120" />
+        <ComboBox x:Name="moduleCombobox" HorizontalAlignment="Left" Margin="112,70,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="moduleCombobox_DropDownOpened" />
+        <ComboBox x:Name="roomCombobox" HorizontalAlignment="Left" Margin="112,105,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="roomCombobox_DropDownOpened"/>
+        <ComboBox x:Name="lecturercomboBox" HorizontalAlignment="Left" Margin="112,134,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="lecturercomboBox_DropDownOpened_1" />
         <Label x:Name="label" Content="Lecturer" HorizontalAlignment="Left" Margin="27,134,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="dayCombobox" HorizontalAlignment="Left" Margin="112,163,0,0" VerticalAlignment="Top" Width="120" />
         <ComboBox x:Name="timeCombobox" HorizontalAlignment="Left" Margin="112,191,0,0" VerticalAlignment="Top" Width="120" />

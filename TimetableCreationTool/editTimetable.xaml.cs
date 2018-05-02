@@ -316,5 +316,29 @@ namespace TimetableCreationTool
             DialogResult = true;
             this.Close();
         }
+
+        private void moduleCombobox_DropDownOpened(object sender, EventArgs e)
+        {
+            if(moduleCombobox.Items.Count == 1)
+            {
+                MessageBox.Show("No other modules studied by course");
+            }
+        }
+
+        private void roomCombobox_DropDownOpened(object sender, EventArgs e)
+        {
+            if (roomCombobox.Items.Count == 1)
+            {
+                MessageBox.Show("No other rooms big enough");
+            }
+        }
+
+        private void lecturercomboBox_DropDownOpened_1(object sender, EventArgs e)
+        {
+            if (lecturercomboBox.Items.Count == 1)
+            {
+                MessageBox.Show("No other lecturers can teach the module");
+            }
+        }
     }
 }

@@ -201,11 +201,17 @@ namespace TimetableCreationTool
             if(moduleCombobox.SelectedItem != null)
             {
                 bindComboBox2(lecturercomboBox);
+                if (lecturercomboBox.Items.Count == 0)
+                {
+                    MessageBox.Show("No lecturers that can teach the selected module");
+                }
             }
             else
             {
                 MessageBox.Show("Choose Module First");
             }
+
+            
         }
 
        
@@ -215,6 +221,22 @@ namespace TimetableCreationTool
             if (lecturercomboBox.SelectedItem != null)
             {
                 lecturercomboBox.SelectedIndex = -1;
+            }
+        }
+
+        private void moduleCombobox_DropDownOpened(object sender, EventArgs e)
+        {
+            if (moduleCombobox.Items.Count == 0)
+            {
+                MessageBox.Show("No modules studied by selected course");
+            }
+        }
+
+        private void roomCombobox_DropDownOpened(object sender, EventArgs e)
+        {
+            if (roomCombobox.Items.Count == 0)
+            {
+                MessageBox.Show("No Rooms that are big enough");
             }
         }
     }

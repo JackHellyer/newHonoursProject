@@ -141,7 +141,7 @@ namespace TimetableCreationTool
             addCourse.Owner = this;
             addCourse.ShowDialog();
 
-
+            bindComboBox(chooseCourse);
 
         }
 
