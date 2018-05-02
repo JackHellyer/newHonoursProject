@@ -329,7 +329,7 @@ namespace TimetableCreationTool
             else
             {
                 saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
-                saveDbToCSVFile("lecturerId,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
+                saveDbToCSVFile("lecturerCode,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
                 saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
                 saveDbToCSVFile("moduleCode,moduleName", "modules.txt", "dbo.Module");
                 saveDbToCSVFile("courseId,moduleId", "coursemodules.txt", "dbo.Course_Module");
@@ -394,7 +394,7 @@ namespace TimetableCreationTool
                 dr5["DayName"] = "Friday";
                 dt.Rows.Add(dr5);
 
-                dataGrid.ItemsSource = dt.DefaultView;
+                //dataGrid.ItemsSource = dt.DefaultView;
 
                // MessageBox.Show(chooseCourse.SelectedValue.ToString());
                 string fileName = "coursemodules.txt";
@@ -404,15 +404,32 @@ namespace TimetableCreationTool
                 addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
                 ams.Owner = this;
                 ams.ShowDialog();
-                string day;
-                string time;
 
+                refreshDatagrid();
                 
+            }
+            
 
-                foreach(DataRow dr in dt.Rows)
+
+        }
+
+        private void refreshDatagrid()
+        {
+            string day;
+            string time;
+
+
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                foreach (DataColumn dc in dt.Columns)
                 {
-                    foreach(DataColumn dc in dt.Columns)
+                    if ((dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                     {
+                        dr[dc] = "";
+                    }
+                    
+                 
                         day = dr[0].ToString();
                         time = dc.ColumnName.ToString();
                         //MessageBox.Show(day + " time: " + time);
@@ -440,25 +457,25 @@ namespace TimetableCreationTool
                                     //line below inserts into cell
                                     dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
 
-                                    
+
                                 }
-                                
-                                
+
+
+
                             }
                         }
 
-                        
+
                     }
-                }
+                
+                
+                   
             }
-            
-
-
         }
-
         private void dataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(dataGrid.SelectedIndex.ToString());
+            //MessageBox.Show(dataGrid.SelectedIndex.ToString());
+            
         }
 
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -499,46 +516,26 @@ namespace TimetableCreationTool
                                     it.Owner = this;
                                     it.ShowDialog();
 
-                                    
+
                                     //MessageBox.Show(day + " time: " + time);
-
-                                    string query = "SELECT m.moduleName, r.roomCode, l.lecturerName FROM Timetable t, Module m, Room r, Lecturer l WHERE t.moduleId = m.moduleId AND t.roomId = r.roomId AND t.lecturerId = l.lecturerId AND courseId = @courseId AND day = @day AND time = @time;";
-                                    string mName;
-                                    string rCode;
-                                    string lName;
-                                    //string mName;
-                                    //string rCode;
-                                    using (var conn = new SqlConnection(dbConnectionString))
-                                    using (var cmd = new SqlCommand(query, conn))
-                                    {
-                                        cmd.Parameters.AddWithValue("@courseId", chooseCourse.SelectedValue.ToString());
-                                        cmd.Parameters.AddWithValue("@day", day);
-                                        cmd.Parameters.AddWithValue("@time", time);
-                                        conn.Open();
-                                        using (var reader = cmd.ExecuteReader())
-                                        {
-                                            if (reader.Read())
-                                            {
-                                                mName = reader.GetString(reader.GetOrdinal("moduleName"));
-                                                rCode = reader.GetString(reader.GetOrdinal("roomCode"));
-                                                lName = reader.GetString(reader.GetOrdinal("lecturerName"));
-                                                //line below inserts into cell
-                                                dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
-
-                                                conn.Close();
-                                            }
-
-
-                                        }
-                                    }
+                                    //dataGrid.CurrentCell.Column = null;
+                                    //dataGrid.ItemsSource = dt.DefaultView;
+                                    refreshDatagrid();
 
 
                                 }
-                                if((day2 == day) && (time == timeString) && (dr[dc].ToString() != "") && (dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
+                                else if((day2 == day) && (time == timeString) && (dr[dc].ToString() != "") && (dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                                 {
-                                    editTimetable editTtable = new editTimetable();
+                                    editTimetable editTtable = new editTimetable(day, timeString, cId, cName);
                                     editTtable.Owner = this;
                                     editTtable.ShowDialog();
+                                    /*if(DialogResult == true)
+                                    {
+                                        dr[dc] = "";
+                                    }*/
+                                    //chooseCourse.SelectedIndex = 2;
+                                    refreshDatagrid();
+
                                 }
 
                                 

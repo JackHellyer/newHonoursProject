@@ -176,9 +176,11 @@ namespace TimetableCreationTool
             }
         }
 
-        private void moduleCombobox_DropDownOpened(object sender, EventArgs e)
+       
+
+        private void moduleCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(lecturercomboBox.SelectedItem != null)
+            if (lecturercomboBox.SelectedItem != null)
             {
                 lecturercomboBox.SelectedIndex = -1;
             }
