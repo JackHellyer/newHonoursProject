@@ -8,8 +8,8 @@
         Title="Add a Module" Height="180" Width="300"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <Label x:Name="moduleCode" Content="Module Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="moduleName" Content="Module Name:" HorizontalAlignment="Left" Margin="25,59,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="moduleCode" FontWeight="Bold" Content="Module Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="moduleName" FontWeight="Bold" Content="Module Name:" HorizontalAlignment="Left" Margin="25,59,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="moduleCodeTextbox" HorizontalAlignment="Left" Height="26" Margin="135,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="moduleNameTextbox" HorizontalAlignment="Left" Height="26" Margin="135,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

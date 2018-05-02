@@ -8,9 +8,9 @@
         Title="Add a Course" Height="200" Width="300"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <Label x:Name="courseCode" Content="Course Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="courseName" Content="Course Name:" HorizontalAlignment="Left" Margin="25,59,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="noOfStudents" Content="Number of Students:" HorizontalAlignment="Left" Margin="25,89,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="courseCode" FontWeight="Bold" Content="Course Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="courseName" FontWeight="Bold" Content="Course Name:" HorizontalAlignment="Left" Margin="25,59,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="noOfStudents" FontWeight="Bold" Content="Number of Students:" HorizontalAlignment="Left" Margin="25,89,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="courseCodeTextbox" HorizontalAlignment="Left" Margin="143,0,0,114" Width="120" TextChanged="courseCodeTextbox_TextChanged" Height="26" VerticalAlignment="Bottom"/>
         <TextBox x:Name="courseNameTextbox" HorizontalAlignment="Left" Height="26" Margin="143,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

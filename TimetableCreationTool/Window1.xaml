@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title= "" Height="500" Width="900"
+        Title= "" Height="500" Width="1000"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
         Loaded="createDatatable"
@@ -46,10 +46,10 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <DataGrid x:Name="dataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="51,126,0,0" ItemsSource="{Binding}" VerticalAlignment="Top" Height="290" Width="787" SelectionMode="Single" SelectionUnit="Cell" SelectedCellsChanged="dataGrid_SelectedCellsChanged"/>
-        <ComboBox x:Name="chooseCourse" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="chooseCourse_DropDownOpened" DropDownClosed="chooseCourse_DropDownClosed"/>
-        <Label x:Name="label" Content="Select Course" HorizontalAlignment="Left" Margin="38,76,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="assignLecturerButton" Content="Assign Modules Taught By Lecturers" HorizontalAlignment="Left" Margin="502,76,0,0" VerticalAlignment="Top" Width="202" Click="assignLecturerButton_Click"/>
+        <DataGrid x:Name="dataGrid" IsReadOnly="True" MinRowHeight="50" MinColumnWidth="78" Margin="28,126,27,0" ItemsSource="{Binding}" SelectionMode="Single" SelectionUnit="Cell" SelectedCellsChanged="dataGrid_SelectedCellsChanged" Height="306" VerticalAlignment="Top"/>
+        <ComboBox x:Name="chooseCourse" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="163,80,0,0" VerticalAlignment="Top" Width="120" Height="25" DropDownOpened="chooseCourse_DropDownOpened" DropDownClosed="chooseCourse_DropDownClosed"/>
+        <Label x:Name="label" FontWeight="Bold" Content="Select Course" HorizontalAlignment="Left" Margin="70,80,0,0" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="assignLecturerButton" Content="Assign Modules Taught By Lecturers" HorizontalAlignment="Left" Height="25" Margin="714,80,0,0" VerticalAlignment="Top" Width="202" Click="assignLecturerButton_Click"/>
 
 
 

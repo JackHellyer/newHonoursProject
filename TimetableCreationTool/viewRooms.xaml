@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Current Rooms" Height="300" Width="326" Loaded="Window_Loaded"
+        Title="Current Rooms" Height="300" Width="448" Loaded="Window_Loaded"
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <CollectionViewSource x:Key="roomsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Room}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource roomsViewSource}">
-        <ListView x:Name="roomsListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="39,18,41,0" VerticalAlignment="Top" Width="238" SelectionChanged="roomsListView_SelectionChanged">
+        <ListView x:Name="roomsListView" ItemsSource="{Binding}" Height="190" Margin="60,24,60,0" VerticalAlignment="Top" SelectionChanged="roomsListView_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -44,8 +44,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="60,229,0,0" VerticalAlignment="Top" Width="75" Click="OnDelete"/>
-        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="185,229,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="60,229,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="OnDelete"/>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="169,229,0,0" VerticalAlignment="Top" Width="75" Height="25" IsCancel="True"/>
 
     </Grid>
 </Window>

@@ -23,10 +23,12 @@ namespace TimetableCreationTool
     {
         string cName;
         string cId;
+        // sql connection string
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
         public addModulesStudied(string courseName, string courseId)
         {
             InitializeComponent();
+            // 
             cName = courseName;
             cId = courseId;
             modulesHeading.Content = "Current Models Studied By " + cName;

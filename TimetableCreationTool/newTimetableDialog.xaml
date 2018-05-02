@@ -10,7 +10,7 @@
     <Grid>
         <Button x:Name="createTimetable" Content="Create Timetable" IsDefault="True" Height="25" Margin="154,80,0,0" VerticalAlignment="Top" Click="createTimetable_Click" HorizontalAlignment="Left" Width="102"/>
         <TextBox x:Name="timetableNameTextBox" Height="26" Padding="3" Margin="136,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
-        <Label x:Name="label1" Content="Timetable Name" HorizontalAlignment="Left" Margin="34,40,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" FontWeight="Bold" Content="Timetable Name" HorizontalAlignment="Left" Margin="34,40,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

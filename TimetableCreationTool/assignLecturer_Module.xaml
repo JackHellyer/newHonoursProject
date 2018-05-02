@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="assignLecturer_Module" Height="300" Width="300"
+        Title="Select Modules Taught By Lecturer" Height="400" Width="350"
         WindowStartupLocation="CenterOwner"
         >
     <Window.Resources>
         <CollectionViewSource x:Key="moduleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Module}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource moduleViewSource}" Margin="0,0,2,-2">
-        <ListView x:Name="moduleListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="150" Margin="15,66,17,0" VerticalAlignment="Top" Width="258">
+        <ListView x:Name="moduleListView" ItemsSource="{Binding}" Height="179" Margin="39,50,43,0" VerticalAlignment="Top">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -41,10 +41,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ComboBox x:Name="lecturerComboBox" HorizontalAlignment="Left" Text="Lecturers" Margin="16,21,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="lecturerComboBox_DropDownClosed"/>
-        <Label x:Name="label" Content="Current Modules Taught Selected Lecturer" HorizontalAlignment="Left" Margin="16,43,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="modulecomboBox" HorizontalAlignment="Left" Margin="16,237,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button" Content="Add Module Taught" HorizontalAlignment="Left" Margin="156,237,0,0" VerticalAlignment="Top" Width="117" Click="button_Click"/>
+        <ComboBox x:Name="lecturerComboBox" HorizontalAlignment="Left" Text="Lecturers" Margin="177,248,0,0" VerticalAlignment="Top" Width="120" Height="25" DropDownClosed="lecturerComboBox_DropDownClosed"/>
+        <Label x:Name="label" FontWeight="Bold" Content="Current Modules Taught by Selected Lecturer" HorizontalAlignment="Left" Margin="43,20,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="modulecomboBox" HorizontalAlignment="Left" Margin="177,280,0,0" VerticalAlignment="Top" Height="25" Width="120"/>
+        <Button x:Name="button" Content="Add Module Taught" HorizontalAlignment="Left" Margin="39,320,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="button_Click"/>
+        <Button x:Name="button1" Content="Cancel" HorizontalAlignment="Left" Margin="178,320,0,0" VerticalAlignment="Top" IsCancel="True" Width="120" Height="25"/>
+        <Label x:Name="label1" FontWeight="Bold" Content="Select Lecturer" HorizontalAlignment="Left" Margin="43,248,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="label2" FontWeight="Bold" Content="Select New Module" HorizontalAlignment="Left" Margin="43,280,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
 

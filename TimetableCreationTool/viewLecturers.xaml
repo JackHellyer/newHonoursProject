@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Current Lecturers" Height="300" Width="300" Loaded="Window_Loaded"
+        Title="Current Lecturers" Height="300" Width="500" Loaded="Window_Loaded"
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <CollectionViewSource x:Key="lecturersViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Lecturer}, CreateList=True}"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource lecturersViewSource}">
-        <ListView x:Name="LecturerListView" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="190" Margin="16,32,18,0" VerticalAlignment="Top" Width="258">
+        <ListView x:Name="LecturerListView" ItemsSource="{Binding}" Height="190" Margin="50,23,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="396">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -34,13 +34,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
-                    
+
+
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="165,229,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
-        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="50,229,0,0" VerticalAlignment="Top" Width="75" Click="OnDelete"/>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="165,229,0,0" VerticalAlignment="Top" Width="85" Height="25" IsCancel="True"/>
+        <Button x:Name="button" Content="Delete" HorizontalAlignment="Left" Margin="50,229,0,0" VerticalAlignment="Top" Width="85" Height="25" Click="OnDelete"/>
 
     </Grid>
 </Window>

@@ -44,10 +44,10 @@
         <ComboBox x:Name="comboBox" ItemsSource="{Binding}" Margin="154,247,18,0" VerticalAlignment="Top"  Height="25" DropDownClosed="comboBox_DropDownClosed"/>
 
         <Button x:Name="addModules" Content="Add New Module" Margin="16,285,156,0" VerticalAlignment="Top" Height="25" Click="addModules_Click"/>
-        <Label x:Name="modulesHeading" Content="" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="258"/>
+        <Label x:Name="modulesHeading" Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="258"/>
         <Button x:Name="deleteButton" Content="Delete Selected Module" Margin="16,210,18,0" VerticalAlignment="Top" Height="25" Click="deleteButton_Click"/>
         <Button x:Name="button" Content="Continue" Margin="156,285,16,0" VerticalAlignment="Top" Height="25" IsDefault="True" Click="button_Click"/>
-        <Label x:Name="label1" Content="Select New Module: " HorizontalAlignment="Left" Margin="16,247,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label1" FontWeight="Bold" Content="Select New Module: " HorizontalAlignment="Left" Margin="16,247,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

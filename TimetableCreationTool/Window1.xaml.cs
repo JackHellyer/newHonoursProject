@@ -428,10 +428,10 @@ namespace TimetableCreationTool
                                     mName = reader.GetString(reader.GetOrdinal("moduleName"));
                                     rCode = reader.GetString(reader.GetOrdinal("roomCode"));
                                     lName = reader.GetString(reader.GetOrdinal("lecturerName"));
-                                    //line below inserts into cell
+                                //line below inserts into cell
+                                
                                     dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
-
-
+                                    
                                 }
 
 
