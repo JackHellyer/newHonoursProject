@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="" Height="300" Width="300"
+        Title="Choose a Name" Height="150" Width="300"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="createTimetable" Content="Create Timetable" IsDefault="True" HorizontalAlignment="Left" Margin="154,218,0,0" VerticalAlignment="Top" Width="102" Click="createTimetable_Click"/>
-        <TextBox x:Name="timetableNameTextBox" HorizontalAlignment="Left" Height="26" Padding="3" Margin="136,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label1" Content="Timetable Name" HorizontalAlignment="Left" Margin="34,148,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="createTimetable" Content="Create Timetable" IsDefault="True" Height="25" Margin="154,80,0,0" VerticalAlignment="Top" Click="createTimetable_Click" HorizontalAlignment="Left" Width="102"/>
+        <TextBox x:Name="timetableNameTextBox" Height="26" Padding="3" Margin="136,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
+        <Label x:Name="label1" Content="Timetable Name" HorizontalAlignment="Left" Margin="34,40,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

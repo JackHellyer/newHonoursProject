@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Add a Room" Height="300" Width="300"
+        Title="Add a Room" Height="200" Width="300"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Label x:Name="roomCode" Content="Room Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
         <Label x:Name="roomCapacity" Content="Room Capacity:" HorizontalAlignment="Left" Margin="25,59,0,0" VerticalAlignment="Top"/>
         <Label x:Name="roomIsLab" Content="Is the Room a Lab:" HorizontalAlignment="Left" Margin="25,89,0,0" VerticalAlignment="Top"/>
-        
+
         <TextBox x:Name="roomCodeTextbox" HorizontalAlignment="Left" Height="26" Margin="135,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="roomCapacityTextbox" HorizontalAlignment="Left" Height="26" Margin="135,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="roomIsLabCombobox" HorizontalAlignment="Left" Margin="135,89,0,0" VerticalAlignment="Top" Width="120"/>
 
 
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="25,215,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" Click="OnSave"/>
-        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="135,215,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+        <Button x:Name="saveButton" Content="Save" Height="25" HorizontalAlignment="Left" Margin="40,129,0,0" VerticalAlignment="Top" Width="85" IsDefault="True" Click="OnSave"/>
+        <Button x:Name="cancelButton" Content="Cancel" Height="25" Margin="167,129,0,0" VerticalAlignment="Top" IsCancel="True" HorizontalAlignment="Left" Width="85"/>
 
 
     </Grid>

@@ -118,6 +118,11 @@ namespace TimetableCreationTool
 
             }
         }
+
+        private void courseCodeTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
 

@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Timetable Creation" Height="500" Width="1000"
+        Title="Timetable Creation" Height="350" Width="282"
         WindowStartupLocation="CenterScreen">
     <Grid>
 
 
-        
-        <Button x:Name="newTimetable" Content="New Timetable" HorizontalAlignment="Left" Margin="461,166,0,0" VerticalAlignment="Top" Width="117" Click="newTimetable_Click"/>
-        <Button x:Name="loadTimetable" Content="Load Timetable" HorizontalAlignment="Left" Margin="461,202,0,0" VerticalAlignment="Top" Width="117" Click="loadTimetable_Click"/>
+
+        <Button x:Name="newTimetable" Content="New Timetable" HorizontalAlignment="Left" Margin="79,170,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="newTimetable_Click"/>
+        <Button x:Name="loadTimetable" Content="Load Timetable" HorizontalAlignment="Left" Margin="79,210,0,0" VerticalAlignment="Top" Width="120" Height="25" Click="loadTimetable_Click"/>
+        <Label x:Name="label" Content="Timetable App" Foreground="Black" FontWeight="Bold" FontSize="30"  Margin="24,47,0,0" VerticalAlignment="Top" Height="84" HorizontalAlignment="Left" Width="224"/>
 
 
 

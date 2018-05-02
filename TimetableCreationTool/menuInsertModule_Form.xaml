@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Add Module" Height="300" Width="300"
+        Title="Add a Module" Height="180" Width="300"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Label x:Name="moduleCode" Content="Module Code:" HorizontalAlignment="Left" Margin="25,29,0,0" VerticalAlignment="Top"/>
@@ -15,8 +15,9 @@
         <TextBox x:Name="moduleNameTextbox" HorizontalAlignment="Left" Height="26" Margin="135,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
 
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="25,215,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" Click="OnSave"/>
-        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="135,215,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+        <Button x:Name="saveButton" Content="Save" Height="25" Margin="40,104,0,0" VerticalAlignment="Top" IsDefault="True" Click="OnSave" HorizontalAlignment="Left" Width="85"/>
+        <Button x:Name="cancelButton" Content="Cancel" Height="25" Margin="167,104,40,0" VerticalAlignment="Top" IsCancel="True"/>
+
 
     </Grid>
 </Window>
