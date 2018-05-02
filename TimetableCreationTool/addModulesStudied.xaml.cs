@@ -28,17 +28,20 @@ namespace TimetableCreationTool
         public addModulesStudied(string courseName, string courseId)
         {
             InitializeComponent();
-            // 
+            // takes in course name and id from the combobox on window1
             cName = courseName;
             cId = courseId;
+            // set heading
             modulesHeading.Content = "Current Models Studied By " + cName;
             
+            // bind combobox to moduleid and module name
             bindComboBox(comboBox);
 
         }
         private timetableCreationEntities3 dbcontext;
         private System.Windows.Data.CollectionViewSource moduleViewSource;
 
+        // on window load refresh the modules listview
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -46,14 +49,14 @@ namespace TimetableCreationTool
             
         }
 
+        // method to refresh the listview
         public void onRefresh()
         {
             this.dbcontext = new timetableCreationEntities3();
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
             int intCId = int.Parse(cId);
 
-            //var query2 = dbcontext.Modules.Where(m => m.Courses.Any(c => c.courseId == intCId));
-
+            // link query to get the modules for the selected course
             var query = from Module in this.dbcontext.Modules
                         where Module.Courses.Any(c => c.courseId == intCId)
                         orderby Module.moduleName
@@ -61,13 +64,14 @@ namespace TimetableCreationTool
             this.moduleViewSource.Source = query.ToList();
         }
 
+        // bind combobox
         public void bindComboBox(ComboBox comboBoxName)
         {
+
             string query = "select moduleId, moduleCode, moduleName from dbo.Module ORDER BY moduleName";
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
             SqlDataAdapter sda = new SqlDataAdapter(query, conn);
-
             DataSet ds = new DataSet();
             sda.Fill(ds, "dbo.Module");
             comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
@@ -75,29 +79,25 @@ namespace TimetableCreationTool
             comboBoxName.SelectedValuePath = ds.Tables[0].Columns["moduleId"].ToString();
         }
 
-        private void comboBox_DropDownClosed(object sender, EventArgs e)
-        {
-            //MessageBox.Show(comboBox.SelectedValue.ToString() + " " + comboBox.Text);
-        }
-
+        
+        // on presseing the add module button
         private void addModules_Click(object sender, RoutedEventArgs e)
         {
+            // if the user has selected a module
             if(comboBox.SelectedItem != null)
             {
                 int courseId = int.Parse(cId);
                 int moduleId = int.Parse(comboBox.SelectedValue.ToString());
-                //string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId +");";
+                // insert into Course_module table if they don't exist
                 string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," +  moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
-
-               
-
 
                 SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
                 SqlCommand command = new SqlCommand(query2, conn);
                 command.ExecuteNonQuery();
                 conn.Close();
-
+                
+                //refresh the listview to show the newly added module
                 onRefresh();
             }
             else
@@ -107,10 +107,12 @@ namespace TimetableCreationTool
             
         }
 
+        // on pressing delete button
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
 
             object selected = this.moduleListView.SelectedItem;
+            // cast listview object as a Module
             Module module = (Module)selected;
             if(selected == null)
             {
@@ -120,11 +122,10 @@ namespace TimetableCreationTool
             }
             int mId = module.moduleId;
 
-            
-
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
 
+            // check if module is currently being used by the course
             SqlCommand checkModulebeingused = new SqlCommand("SELECT COUNT(*) FROM dbo.timetable WHERE courseId = @courseId AND moduleId = @moduleId;", conn);
             checkModulebeingused.Parameters.AddWithValue("@courseId", cId);
             checkModulebeingused.Parameters.AddWithValue("@moduleId", mId);
@@ -137,6 +138,7 @@ namespace TimetableCreationTool
             }
             else
             {
+                // delete selected module from selected course
                 string query = "DELETE FROM Course_Module WHERE courseId = " + cId + "AND moduleId = " + mId + ";";
 
                 SqlCommand command = new SqlCommand(query, conn);
@@ -144,16 +146,15 @@ namespace TimetableCreationTool
                 
 
                 onRefresh();
-                //MessageBox.Show(mId.ToString());
-
-                //onRefresh();
+              
             }
 
             conn.Close();
         }
-
+        //continue button 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            //close dialog window
             this.Close();
         }
     }

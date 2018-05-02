@@ -41,7 +41,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ComboBox x:Name="comboBox" ItemsSource="{Binding}" Margin="154,247,18,0" VerticalAlignment="Top"  Height="25" DropDownClosed="comboBox_DropDownClosed"/>
+        <ComboBox x:Name="comboBox" ItemsSource="{Binding}" Margin="154,247,18,0" VerticalAlignment="Top"  Height="25" />
 
         <Button x:Name="addModules" Content="Add New Module" Margin="16,285,156,0" VerticalAlignment="Top" Height="25" Click="addModules_Click"/>
         <Label x:Name="modulesHeading" Content="" FontWeight="Bold" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="258"/>
