@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="addModulesStudied" Height="346.392" Width="300"
+        Title="Edit Modules Studied" Height="360" Width="300"
         WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
     <Window.Resources>
@@ -41,12 +41,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ComboBox x:Name="comboBox" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="16,243,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="comboBox_DropDownClosed"/>
+        <ComboBox x:Name="comboBox" ItemsSource="{Binding}" Margin="154,247,18,0" VerticalAlignment="Top"  Height="25" DropDownClosed="comboBox_DropDownClosed"/>
 
-        <Button x:Name="addModules" Content="Add Modules" HorizontalAlignment="Left" Margin="141,245,0,0" VerticalAlignment="Top" Width="133" Click="addModules_Click"/>
-        <Label x:Name="label" Content="Modules currently studied" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="171"/>
-        <Button x:Name="deleteButton" Content="Delete Selected Module" HorizontalAlignment="Left" Margin="41,212,0,0" VerticalAlignment="Top" Width="206" Click="deleteButton_Click"/>
-        <Button x:Name="button" Content="Continue" HorizontalAlignment="Left" Margin="199,285,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" Click="button_Click"/>
+        <Button x:Name="addModules" Content="Add New Module" Margin="16,285,156,0" VerticalAlignment="Top" Height="25" Click="addModules_Click"/>
+        <Label x:Name="modulesHeading" Content="" HorizontalAlignment="Left" Margin="16,6,0,0" VerticalAlignment="Top" Width="258"/>
+        <Button x:Name="deleteButton" Content="Delete Selected Module" Margin="16,210,18,0" VerticalAlignment="Top" Height="25" Click="deleteButton_Click"/>
+        <Button x:Name="button" Content="Continue" Margin="156,285,16,0" VerticalAlignment="Top" Height="25" IsDefault="True" Click="button_Click"/>
+        <Label x:Name="label1" Content="Select New Module: " HorizontalAlignment="Left" Margin="16,247,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

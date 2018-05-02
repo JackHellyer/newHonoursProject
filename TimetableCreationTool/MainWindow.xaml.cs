@@ -31,7 +31,7 @@ namespace TimetableCreationTool
         {
             newTimetableDialog nt = new newTimetableDialog();
             nt.Show();
-            //this.Close();
+            this.Close();
             
            
         }
@@ -105,6 +105,7 @@ namespace TimetableCreationTool
                 
 
         }
+        // validate taht the file is inside of the Timetable app folder
         private bool ifVaildLoadFile(string t)
         {
              bool ifValid = false;

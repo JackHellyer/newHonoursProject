@@ -44,14 +44,14 @@ namespace TimetableCreationTool
            
         }
         
-        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int test = dataGrid.CurrentCell.Column.DisplayIndex;
             string test2 = dataGrid.SelectedIndex.ToString();
 
             MessageBox.Show(test + ",     " + test2);
 
-        }
+        }*/
         
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
@@ -338,32 +338,7 @@ namespace TimetableCreationTool
             }
         }
 
-        /*private int insertTodataGrid(string day, string time)
-        {
-            string query = "SELECT tId FROM Timetable WHERE courseId = @courseId AND day = @day AND time = @time;";
-            int tId;
-            using(var conn = new SqlConnection(dbConnectionString))
-            using (var cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@courseId", chooseCourse.SelectedValue.ToString());
-                cmd.Parameters.AddWithValue("@day", day);
-                cmd.Parameters.AddWithValue("@time", time);
-                conn.Open();
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if(reader.Read())
-                    {
-                        tId = reader.GetInt32(reader.GetOrdinal("tId"));
-                        return tId;
-                    }
-                    else
-                    {
-                        tId = 0;
-                        return tId;
-                    }
-                }
-            }
-        }*/
+        
 
         private void chooseCourse_DropDownClosed(object sender, EventArgs e)
         {
@@ -394,7 +369,7 @@ namespace TimetableCreationTool
                 dr5["DayName"] = "Friday";
                 dt.Rows.Add(dr5);
 
-                //dataGrid.ItemsSource = dt.DefaultView;
+                dataGrid.ItemsSource = dt.DefaultView;
 
                // MessageBox.Show(chooseCourse.SelectedValue.ToString());
                 string fileName = "coursemodules.txt";
@@ -570,6 +545,12 @@ namespace TimetableCreationTool
             createExampleCSVFile("lecturermodules.txt", "lecturerId, moduleId");
         }
 
-       
+        private void chooseCourse_DropDownOpened(object sender, EventArgs e)
+        {
+            if(chooseCourse.Items.Count == 0)
+            {
+                MessageBox.Show("No courses created yet");
+            }
+        }
     }
 }

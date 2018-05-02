@@ -9,8 +9,10 @@
         WindowStartupLocation="CenterOwner">
         
     <Grid>
-        <Button x:Name="uploadCSVFiletoDB" Content="Upload CSV file Data" HorizontalAlignment="Left" Margin="149,223,0,0" VerticalAlignment="Top" Width="auto" Click="uploadCsvData_Click"/>
-        <Button x:Name="openExternalCSVFile" Content="Open CSV file to add room data" HorizontalAlignment="Left" Margin="42,103,0,0" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.093,-0.35" Click="openExternalCSVFile_Click"/>
-
+        <Button x:Name="uploadCSVFiletoDB" Content="Upload CSV file Data" Margin="145,223,20,0" Height="25" VerticalAlignment="Top" Click="uploadCsvData_Click"/>
+        <Button x:Name="openExternalCSVFile" Content="Open CSV file to add Course data" Margin="10,183,10,0" Height="25" VerticalAlignment="Top" RenderTransformOrigin="0.093,-0.35" Click="openExternalCSVFile_Click"/>
+        <Button x:Name="cancel" Content="Cancel" Margin="20,223,0,0" Height="25"  Width="110" VerticalAlignment="Top" Click="uploadCsvData_Click" IsCancel="True" HorizontalAlignment="Left"/>
+        <TextBox x:Name="textBox" Height="154" Margin="20,10,20,0" TextWrapping="Wrap" TextAlignment="Center" Text="  Example CSV Format&#xA;Room Code can be 15 characters long.&#xA;Room Capacity must be a number.&#xD;&#xA;Room isLab must be 'true' or 'false.&#xA;How to enter data into CSV File&#xA;Make Sure to put commas between each item but not at the end of a line&#xA;roomCode, capacity, isLab&#xA;N355, 100, true" VerticalAlignment="Top"/>
+    
     </Grid>
 </Window>

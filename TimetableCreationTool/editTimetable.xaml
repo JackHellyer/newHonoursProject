@@ -5,24 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimetableCreationTool"
         mc:Ignorable="d"
-        Title="Edit Timetable" Height="300" Width="300"
+        Title="Edit Timetable" Height="321" Width="300"
         WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="saveButton" Content="Edit" HorizontalAlignment="Left" Margin="190,232,0,0" VerticalAlignment="Top" Width="74" Click="saveButton_Click"/>
-        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="25,232,0,0" VerticalAlignment="Top" Width="76" Click="cancelButton_Click"/>
-        <Label x:Name="labelCourseName" Content="Course Name" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelModuleName" Content="Module Name" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelRoom" Content="Room" HorizontalAlignment="Left" Margin="28,105,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelDay" Content="Day" HorizontalAlignment="Left" Margin="31,160,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" Margin="28,191,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="courseNameTextBox" HorizontalAlignment="Left" Height="24" Margin="112,33,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" IsReadOnlyCaretVisible="False" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="saveButton" Content="Edit" Margin="193,245,0,0" VerticalAlignment="Top" Height="25" Click="saveButton_Click" HorizontalAlignment="Left" Width="74"/>
+        <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="25,245,0,0" Height="25" Width="76" Click="cancelButton_Click" VerticalAlignment="Top"/>
+        <Label x:Name="labelCourseName" Content="Course Name" HorizontalAlignment="Left" Margin="22,35,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelModuleName" Content="Module Name" HorizontalAlignment="Left" Margin="18,70,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelRoom" Content="Room" HorizontalAlignment="Left" Margin="62,105,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelDay" Content="Day" HorizontalAlignment="Left" Margin="70,175,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelTime" Content="Time" HorizontalAlignment="Left" Margin="64,210,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="courseNameTextBox" HorizontalAlignment="Left" Height="24" Margin="112,35,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" IsReadOnlyCaretVisible="False" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="moduleCombobox" HorizontalAlignment="Left" Margin="112,70,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="moduleCombobox_DropDownOpened" />
         <ComboBox x:Name="roomCombobox" HorizontalAlignment="Left" Margin="112,105,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="roomCombobox_DropDownOpened"/>
-        <ComboBox x:Name="lecturercomboBox" HorizontalAlignment="Left" Margin="112,134,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="lecturercomboBox_DropDownOpened_1" />
-        <Label x:Name="label" Content="Lecturer" HorizontalAlignment="Left" Margin="27,134,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="dayCombobox" HorizontalAlignment="Left" Margin="112,163,0,0" VerticalAlignment="Top" Width="120" />
-        <ComboBox x:Name="timeCombobox" HorizontalAlignment="Left" Margin="112,191,0,0" VerticalAlignment="Top" Width="120" />
-        <Button x:Name="deleteButton" Content="Delete" HorizontalAlignment="Left" Margin="109,232,0,0" VerticalAlignment="Top" Width="74" Click="deleteButton_Click"/>
+        <ComboBox x:Name="lecturercomboBox" HorizontalAlignment="Left" Margin="112,140,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="lecturercomboBox_DropDownOpened_1" />
+        <Label x:Name="label" Content="Lecturer" HorizontalAlignment="Left" Margin="50,140,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="dayCombobox" HorizontalAlignment="Left" Margin="112,175,0,0" VerticalAlignment="Top" Width="120" />
+        <ComboBox x:Name="timeCombobox" HorizontalAlignment="Left" Margin="112,210,0,0" VerticalAlignment="Top" Width="120" />
+        <Button x:Name="deleteButton" Content="Delete" Margin="109,245,0,0" VerticalAlignment="Top" Height="25" Click="deleteButton_Click" HorizontalAlignment="Left" Width="74"/>
     </Grid>
 </Window>

@@ -47,7 +47,7 @@
             </Menu>
         </StackPanel>
         <DataGrid x:Name="dataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="51,126,0,0" ItemsSource="{Binding}" VerticalAlignment="Top" Height="290" Width="787" SelectionMode="Single" SelectionUnit="Cell" SelectedCellsChanged="dataGrid_SelectedCellsChanged"/>
-        <ComboBox x:Name="chooseCourse" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="chooseCourse_DropDownClosed"/>
+        <ComboBox x:Name="chooseCourse" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="chooseCourse_DropDownOpened" DropDownClosed="chooseCourse_DropDownClosed"/>
         <Label x:Name="label" Content="Select Course" HorizontalAlignment="Left" Margin="38,76,0,0" VerticalAlignment="Top"/>
         <Button x:Name="assignLecturerButton" Content="Assign Modules Taught By Lecturers" HorizontalAlignment="Left" Margin="502,76,0,0" VerticalAlignment="Top" Width="202" Click="assignLecturerButton_Click"/>
 

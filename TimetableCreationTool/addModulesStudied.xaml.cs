@@ -29,6 +29,8 @@ namespace TimetableCreationTool
             InitializeComponent();
             cName = courseName;
             cId = courseId;
+            modulesHeading.Content = "Current Models Studied By " + cName;
+            
             bindComboBox(comboBox);
 
         }
