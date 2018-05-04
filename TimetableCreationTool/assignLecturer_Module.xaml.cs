@@ -112,6 +112,49 @@ namespace TimetableCreationTool
             }
             
         }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            object selected = this.moduleListView.SelectedItem;
+            // cast listview object as a Module
+            Module module = (Module)selected;
+            if (selected == null)
+            {
+                MessageBox.Show("No module selected");
+                return;
+
+            }
+            int mId = module.moduleId;
+            int lecturerId = int.Parse(lecturerComboBox.SelectedValue.ToString());
+            SqlConnection conn = new SqlConnection(dbConnectionString);
+            conn.Open();
+
+            // check if module is currently being used by the course
+            SqlCommand checkModulebeingTaught = new SqlCommand("SELECT COUNT(*) FROM dbo.timetable WHERE lecturerId = @lecturerId AND moduleId = @moduleId;", conn);
+            checkModulebeingTaught.Parameters.AddWithValue("@lecturerId", lecturerId);
+            checkModulebeingTaught.Parameters.AddWithValue("@moduleId", mId);
+
+            int LecturerTeachingModule = (int)checkModulebeingTaught.ExecuteScalar();
+
+            if (LecturerTeachingModule > 0)
+            {
+                MessageBox.Show("can't delete module as it's being taught by current lecturer");
+            }
+            else
+            {
+                // delete selected module from selected course
+                string query = "DELETE FROM Lecturer_Module WHERE lecturerId = " + lecturerId + "AND moduleId = " + mId + ";";
+
+                SqlCommand command = new SqlCommand(query, conn);
+                command.ExecuteNonQuery();
+
+
+                onRefresh();
+
+            }
+
+            conn.Close();
+        }
     }
 }
 

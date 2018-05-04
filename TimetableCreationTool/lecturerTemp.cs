@@ -18,8 +18,6 @@ using System;
 public partial class lecturerTemp
 {
 
-    
-
     public string lecturerName { get; set; }
 
     public string lecturerDept { get; set; }

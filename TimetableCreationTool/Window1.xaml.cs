@@ -44,14 +44,7 @@ namespace TimetableCreationTool
            
         }
         
-        /*private void SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int test = dataGrid.CurrentCell.Column.DisplayIndex;
-            string test2 = dataGrid.SelectedIndex.ToString();
-
-            MessageBox.Show(test + ",     " + test2);
-
-        }*/
+      
         
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
@@ -219,22 +212,6 @@ namespace TimetableCreationTool
             dbConnection.Close();
         }
 
-        /*public void truncateAllTables()
-        {
-            string queryString = "TRUNCATE TABLE dbo.Course_Module; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0);  DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
-            using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
-            {
-
-                SqlCommand command = new SqlCommand(queryString, dbConnection);
-                dbConnection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                dbConnection.Close();
-
-
-            }
-        }*/
         DataTable dt = new DataTable();
         public void createDatatable(object sender, RoutedEventArgs e)
         {
@@ -406,8 +383,6 @@ namespace TimetableCreationTool
                     
                         day = dr[0].ToString();
                         time = dc.ColumnName.ToString();
-                        //MessageBox.Show(day + " time: " + time);
-
                         string query = "SELECT m.moduleName, r.roomCode, l.lecturerName FROM Timetable t, Module m, Room r, Lecturer l WHERE t.moduleId = m.moduleId AND t.roomId = r.roomId AND t.lecturerId = l.lecturerId AND courseId = @courseId AND day = @day AND time = @time;";
                         string mName;
                         string rCode;
@@ -450,11 +425,7 @@ namespace TimetableCreationTool
                    
             }
         }
-        private void dataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //MessageBox.Show(dataGrid.SelectedIndex.ToString());
-            
-        }
+      
 
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -467,19 +438,12 @@ namespace TimetableCreationTool
                     if (dataGrid.CurrentCell.Column != null)
                     {
                         int columnIndex = dataGrid.CurrentCell.Column.DisplayIndex;
-
                         int rowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
                         DataRowView v = (DataRowView)dataGrid.Items[rowIndex];
                         string day = (string)v[0];
                         string timeString = (string)dataGrid.Columns[columnIndex].Header;
-
-
                         string cName = chooseCourse.Text;
-                        //MessageBox.Show((string)v.ToString());
-                        //MessageBox.Show(day + " and    " + timeString);
                         string cId = chooseCourse.SelectedValue.ToString();
-
-
                         string day2;
                         string time;
                         foreach (DataRow dr in dt.Rows)
@@ -493,25 +457,15 @@ namespace TimetableCreationTool
                                     insertTimetable it = new insertTimetable(day, timeString, cId, cName);
                                     it.Owner = this;
                                     it.ShowDialog();
-
-
-                                    //MessageBox.Show(day + " time: " + time);
-                                    //dataGrid.CurrentCell.Column = null;
-                                    //dataGrid.ItemsSource = dt.DefaultView;
                                     refreshDatagrid();
-
-
                                 }
+
                                 else if((day2 == day) && (time == timeString) && (dr[dc].ToString() != "") && (dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                                 {
                                     editTimetable editTtable = new editTimetable(day, timeString, cId, cName);
                                     editTtable.Owner = this;
                                     editTtable.ShowDialog();
-                                    /*if(DialogResult == true)
-                                    {
-                                        dr[dc] = "";
-                                    }*/
-                                    //chooseCourse.SelectedIndex = 2;
+                                 
                                     refreshDatagrid();
 
                                 }
@@ -540,7 +494,7 @@ namespace TimetableCreationTool
         private void assignLecturerButton_Click(object sender, RoutedEventArgs e)
         {
             assignLecturer_Module alm = new assignLecturer_Module();
-
+            alm.Owner = this;
             alm.ShowDialog();
             createExampleCSVFile("lecturermodules.txt", "lecturerId, moduleId");
         }

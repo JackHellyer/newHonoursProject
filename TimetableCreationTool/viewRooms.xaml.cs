@@ -69,13 +69,5 @@ namespace TimetableCreationTool
 
         }
 
-        
-
-        private void roomsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //object selectedRoom = roomsListView.SelectedItem;
-
-            //Room room = (Room)selectedRoom;
-        }
     }
 }

@@ -93,12 +93,6 @@ namespace TimetableCreationTool
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 dbConnection.Open();
                 int numberOfChanges = command.ExecuteNonQuery();
-                //MessageBox.Show(numberOfChanges.ToString());
-
-                //SqlDataReader reader = command.ExecuteReader();               
-                /*
-                int numOfRows = command.ExecuteNonQuery();
-                MessageBox.Show(numOfRows.ToString());*/
                 dbConnection.Close();
                 return numberOfChanges;
                 //return numOfRows;
