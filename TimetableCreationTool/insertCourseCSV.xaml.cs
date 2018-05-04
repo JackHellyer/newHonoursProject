@@ -85,14 +85,14 @@ namespace TimetableCreationTool
             catch (Exception ex)
             {
                 //MessageBox.Show("not working");
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show("Check formating of the course CSV file");
 
             }
             return csvData;
         }
 
 
-        public void InsertDataTableToSQL(DataTable csvFileData)
+        public bool InsertDataTableToSQL(DataTable csvFileData)
         {
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
@@ -101,26 +101,36 @@ namespace TimetableCreationTool
                 dbConnection.Open();
                 if (dbConnection.State == ConnectionState.Open)
                 {
-
-                    //MessageBox.Show("connection success");
-                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    try
                     {
-                        // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "courseTemp";
+                        //MessageBox.Show("connection success");
+                        using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                        {
+                            // change this method later to have a string parameter which will hold the destination table
+                            sbc.DestinationTableName = "courseTemp";
 
-                        foreach (var column in csvFileData.Columns)
+                            foreach (var column in csvFileData.Columns)
 
-                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
-                        sbc.WriteToServer(csvFileData);
-                        dbConnection.Close();
+                                sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                            sbc.WriteToServer(csvFileData);
+                            dbConnection.Close();
+                            return true;
 
 
 
+                        }
                     }
+                    catch
+                    {
+                        MessageBox.Show("Courses not loaded correctly, check CSV file to make sure formatting is correct");
+                        return false;
+                    }
+                    
                 }
                 else
                 {
                     MessageBox.Show("connection failed");
+                    return false;
                 }
 
 

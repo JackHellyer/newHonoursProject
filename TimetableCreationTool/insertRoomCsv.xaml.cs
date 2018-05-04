@@ -87,14 +87,14 @@ namespace TimetableCreationTool
             catch (Exception ex)
             {
                 //MessageBox.Show("not working");
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show("Issues with the rooms csv file, check the formating");
 
             }
             return csvData;
         }
 
 
-        public void InsertDataTableToSQL(DataTable csvFileData)
+        public bool InsertDataTableToSQL(DataTable csvFileData)
         {
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
@@ -103,26 +103,36 @@ namespace TimetableCreationTool
                 dbConnection.Open();
                 if (dbConnection.State == ConnectionState.Open)
                 {
-
-                    //MessageBox.Show("connection success");
-                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    try
                     {
-                        // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "dbo.roomTemp";
+                        using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                        {
+                            // change this method later to have a string parameter which will hold the destination table
+                            sbc.DestinationTableName = "dbo.roomTemp";
 
-                        foreach (var column in csvFileData.Columns)
+                            foreach (var column in csvFileData.Columns)
 
-                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
-                        sbc.WriteToServer(csvFileData);
-                        dbConnection.Close();
+                                sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                            sbc.WriteToServer(csvFileData);
+                            dbConnection.Close();
+
+                            return true;
 
 
-
+                        }
                     }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("Rooms not loaded correctly, check CSV file to make sure formatting is correct");
+                        return false;
+                    }
+                   
+                   
                 }
                 else
                 {
                     MessageBox.Show("connection failed");
+                    return false;
                 }
 
 

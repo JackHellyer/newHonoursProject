@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,11 +41,14 @@ namespace TimetableCreationTool
 
         public void uploadCsvData_Click(object sender, RoutedEventArgs e)
         {
-            DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "lecturers.txt");
-            InsertDataTableToSQL(csvData);
-            selectIntoDistinct();
-            //truncateTempAfterCSVInsert();
-            this.Close();
+            
+                DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "lecturers.txt");
+                InsertDataTableToSQL(csvData);
+                selectIntoDistinct();
+                truncateTempAfterCSVInsert();
+                this.Close();
+            
+            
         }
 
         public DataTable getDataTableCSVFile(string filePath)
@@ -86,14 +90,14 @@ namespace TimetableCreationTool
             catch (Exception ex)
             {
                 //MessageBox.Show("not working");
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
 
             }
             return csvData;
         }
 
 
-        public void InsertDataTableToSQL(DataTable csvFileData)
+        public bool InsertDataTableToSQL(DataTable csvFileData)
         {
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
@@ -103,22 +107,33 @@ namespace TimetableCreationTool
                 if (dbConnection.State == ConnectionState.Open)
                 {
 
-                    //MessageBox.Show("connection success");
-                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                    try
                     {
-                        // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "lecturerTemp";
+                        //MessageBox.Show("connection success");
+                        using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                        {
+                            // change this method later to have a string parameter which will hold the destination table
+                            sbc.DestinationTableName = "lecturerTemp";
 
-                        foreach (var column in csvFileData.Columns)
-                     
-                            sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                            foreach (var column in csvFileData.Columns)
+
+                                sbc.ColumnMappings.Add(column.ToString(), column.ToString());
                             sbc.WriteToServer(csvFileData);
                             dbConnection.Close();
+                            return true;
+                        }
                     }
+                    catch
+                    {
+                        MessageBox.Show("Lecturers not loaded correctly, check CSV file to make sure formatting is correct");
+                        return false;
+                    }
+                   
                 }
                 else
                 {
                     MessageBox.Show("connection failed");
+                    return false;
                 }
             }
         }

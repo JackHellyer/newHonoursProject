@@ -60,38 +60,97 @@ namespace TimetableCreationTool
                     bool ifValid = ifVaildLoadFile(fbd.SelectedPath);
                     if(ifValid)
                     {
-                        DataTable roomCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt");
-                        irc.InsertDataTableToSQL(roomCSV);
-                        irc.selectIntoDistinct();
-                        irc.truncateTempAfterCSVInsert();
-                        DataTable lecturerCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt");
-                        ilc.InsertDataTableToSQL(lecturerCSV);
-                        ilc.selectIntoDistinct();
-                        ilc.truncateTempAfterCSVInsert();
-                        DataTable courseCSV = icc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt");
-                        icc.InsertDataTableToSQL(courseCSV);
-                        icc.selectIntoDistinct();
-                        icc.truncateTempAfterCSVInsert();
-                        DataTable modulesCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "modules.txt");
-                        imc.InsertDataTableToSQL(modulesCSV);
-                        imc.selectIntoDistinct();
-                        imc.truncateTempAfterCSVInsert();
+                        bool roomSuccess = false;
+                        bool lecturerSuccess = false;
+                        bool courseSuccess = false;
+                        bool moduleSuccess = false;
 
-                        DataTable courseModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "coursemodules.txt");
-                        InsertDataTableToSQL(courseModuleCSV);
-                        DataTable timetableCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "timetable.txt");
-                        InsertDataTableToSQLTimetable(timetableCSV);
+                        if(File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt"))
+                        {
+                            DataTable roomCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "rooms.txt");
+                            roomSuccess = irc.InsertDataTableToSQL(roomCSV);
 
-                        DataTable lecturerModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturermodules.txt");
-                        InsertDataTableToSQLlecturerModules(lecturerModuleCSV);
+                            if(roomSuccess)
+                            {
+                                //irc.InsertDataTableToSQL(roomCSV);
+                                irc.selectIntoDistinct();
+                                irc.truncateTempAfterCSVInsert();
+                            }
+                            
+                        }
+                        if (File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt"))
+                        {
 
-                        Window1 win1 = new Window1(tName);
-                        win1.Show();
-                        irc.Close();
-                        ilc.Close();
-                        icc.Close();
-                        imc.Close();
-                        this.Close();
+                            DataTable lecturerCSV = irc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturers.txt");
+                            lecturerSuccess = ilc.InsertDataTableToSQL(lecturerCSV);
+                            
+                            if(lecturerSuccess)
+                            {
+                                ilc.selectIntoDistinct();
+                                ilc.truncateTempAfterCSVInsert();
+                            }
+                            
+                        }
+
+                        if (File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt"))
+                        {
+                            DataTable courseCSV = icc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "courses.txt");
+                            courseSuccess = icc.InsertDataTableToSQL(courseCSV);
+
+                            if(courseSuccess)
+                            {
+                                icc.selectIntoDistinct();
+                                icc.truncateTempAfterCSVInsert();
+                            }
+                            
+                        }
+
+                        if (File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "modules.txt"))
+                        {
+                            DataTable modulesCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "modules.txt");
+                            moduleSuccess = imc.InsertDataTableToSQL(modulesCSV);
+
+                            if(moduleSuccess)
+                            {
+                                imc.selectIntoDistinct();
+                                imc.truncateTempAfterCSVInsert();
+                            }
+                            
+
+
+                        }
+
+                           
+                        if(File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "coursemodules.txt"))
+                        {
+                            DataTable courseModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "coursemodules.txt");
+                            InsertDataTableToSQL(courseModuleCSV);
+                        }
+
+                        if (File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "timetable.txt"))
+                        {
+                            DataTable timetableCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "timetable.txt");
+                            InsertDataTableToSQLTimetable(timetableCSV);
+                        }
+
+                        if (File.Exists(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturermodules.txt"))
+                        {
+                            DataTable lecturerModuleCSV = imc.getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + tName + "/" + "lecturermodules.txt");
+                            InsertDataTableToSQLlecturerModules(lecturerModuleCSV);
+                        }
+
+                        /* if(roomSuccess && moduleSuccess && courseSuccess && lecturerSuccess)
+                        {*/
+                            Window1 win1 = new Window1(tName);
+                            win1.Show();
+                            irc.Close();
+                            ilc.Close();
+                            icc.Close();
+                            imc.Close();
+                            this.Close();
+                        //}
+
+                        
                     }
                     else
                     {
@@ -180,22 +239,26 @@ namespace TimetableCreationTool
                 dbConnection.Open();
                 if (dbConnection.State == ConnectionState.Open)
                 {
+                    
+                        //MessageBox.Show("connection success");
+                        using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
+                        {
+                            // change this method later to have a string parameter which will hold the destination table
+                            sbc.DestinationTableName = "Timetable";
 
-                    //MessageBox.Show("connection success");
-                    using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
-                    {
-                        // change this method later to have a string parameter which will hold the destination table
-                        sbc.DestinationTableName = "Timetable";
+                            foreach (var column in csvFileData.Columns)
 
-                        foreach (var column in csvFileData.Columns)
-
-                        sbc.ColumnMappings.Add(column.ToString(), column.ToString());
-                        sbc.WriteToServer(csvFileData);
-                        dbConnection.Close();
+                                sbc.ColumnMappings.Add(column.ToString(), column.ToString());
+                            sbc.WriteToServer(csvFileData);
+                            dbConnection.Close();
 
 
 
-                    }
+                        }
+                    
+
+
+                   
                 }
                 else
                 {
