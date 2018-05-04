@@ -30,6 +30,8 @@ namespace TimetableCreationTool
             timetableName = tName;
 
         }
+        // comments the same as insertCourseCSV window but for the lecturer
+        // ran out of time to finish comments
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 

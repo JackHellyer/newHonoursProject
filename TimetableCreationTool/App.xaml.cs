@@ -19,11 +19,10 @@ namespace TimetableCreationTool
         public void onExit(object sender, ExitEventArgs e)
         {
             
-            ///saveBeforeExit s = new saveBeforeExit();
-            //s.Show();
+            
             truncateAllTables();
         }
-
+        // delete data from on the table if the user exits the program by clicking the red cross
         public void truncateAllTables()
         {
             string queryString = "TRUNCATE TABLE dbo.Course_Module; TRUNCATE TABLE dbo.Lecturer_Module; TRUNCATE TABLE dbo.Timetable; DELETE FROM dbo.Room DBCC CHECKIDENT ('timetableCreation.dbo.Room', RESEED, 0); DELETE FROM dbo.Lecturer DBCC CHECKIDENT ('timetableCreation.dbo.Lecturer', RESEED, 0); DELETE FROM dbo.Course DBCC CHECKIDENT ('timetableCreation.dbo.Course', RESEED, 0); DELETE FROM dbo.Module DBCC CHECKIDENT ('timetableCreation.dbo.Module', RESEED, 0);";
@@ -33,7 +32,8 @@ namespace TimetableCreationTool
                 SqlCommand command = new SqlCommand(queryString, dbConnection);
                 dbConnection.Open();
 
-                SqlDataReader reader = command.ExecuteReader();
+               
+                    command.ExecuteNonQuery();
 
                 dbConnection.Close();
 

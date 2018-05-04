@@ -24,6 +24,7 @@ namespace TimetableCreationTool
         
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
         string cId;
+        // takes in day and string from the datagrid, course id and name from the course combobox on the main window
         public insertTimetable(string day, string time, string courseId, string courseName)
         {
             InitializeComponent();
@@ -34,10 +35,11 @@ namespace TimetableCreationTool
             courseNameTextBox.Text = courseName;
             bindComboBox(moduleCombobox);
             bindComboBox1(roomCombobox);
-            //bindComboBox2(lecturercomboBox);
+            
 
         }
 
+        // bind combobox to module table data
         public void bindComboBox(ComboBox comboBoxName)
         {
             string query = "select cm.moduleId, cm.courseId, m.moduleCode, m.moduleName from dbo.Module m, dbo.Course_Module cm WHERE m.moduleId = cm.moduleId AND cm.courseId = " + cId + " ORDER BY m.moduleName";
@@ -52,9 +54,9 @@ namespace TimetableCreationTool
             comboBoxName.SelectedValuePath = ds.Tables[0].Columns["moduleId"].ToString();
         }
 
+        // bind combo box to room table data
         public void bindComboBox1(ComboBox comboBoxName)
         {
-
 
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
@@ -65,7 +67,7 @@ namespace TimetableCreationTool
                     Value = cId
                     
             });
-                //sda.SelectCommand.Parameters.AddWithValue("@day", dayTextBox.Text);
+                
                 DataSet ds = new DataSet();
                 sda.Fill(ds, "dbo.Room");
                 comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
@@ -74,20 +76,15 @@ namespace TimetableCreationTool
 
             conn.Close();
 
-
-            // string query = "select r.roomId, r.roomCode from dbo.Room r, dbo.Course c, dbo.Timetable t WHERE c.courseId = " + cId + " AND c.noOfStudents <= r.capacity AND t.day <> " + dayTextBox.Text  + " ORDER BY roomCode;";
-
-            
-            
         }
 
-        
+        // bind combo box to lecturer table data
         public void bindComboBox2(ComboBox comboBoxName)
         {
             if(moduleCombobox.SelectedItem != null)
             {
                 int moduleId = int.Parse(moduleCombobox.SelectedValue.ToString());
-                //MessageBox.Show(moduleId.ToString());
+                
                 SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
                 SqlDataAdapter sda = new SqlDataAdapter("select lm.lecturerId, lm.moduleId, l.lecturerName from dbo.Lecturer l, dbo.Lecturer_Module lm WHERE lm.lecturerId = l.lecturerId AND lm.moduleId = @moduleId ORDER BY l.lecturerName;", conn);
@@ -97,7 +94,7 @@ namespace TimetableCreationTool
                     Value = moduleId
 
                 });
-                //sda.SelectCommand.Parameters.AddWithValue("@day", dayTextBox.Text);
+                
                 DataSet ds = new DataSet();
                 sda.Fill(ds, "dbo.Lecturer");
                 comboBoxName.ItemsSource = ds.Tables[0].DefaultView;
@@ -107,17 +104,13 @@ namespace TimetableCreationTool
                 conn.Close();
             }
 
-            
-
-
-            // string query = "select r.roomId, r.roomCode from dbo.Room r, dbo.Course c, dbo.Timetable t WHERE c.courseId = " + cId + " AND c.noOfStudents <= r.capacity AND t.day <> " + dayTextBox.Text  + " ORDER BY roomCode;";
-
-
 
         }
 
+        // save button event handler 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
+            // if the user has selected a module room and lecturer
             if (moduleCombobox.SelectedItem != null && roomCombobox.SelectedItem != null && lecturercomboBox.SelectedItem != null)
             {
                 int courseId = int.Parse(cId);
@@ -125,16 +118,13 @@ namespace TimetableCreationTool
                 int roomId = int.Parse(roomCombobox.SelectedValue.ToString());
                 int lecturerId = int.Parse(lecturercomboBox.SelectedValue.ToString());
 
-                //string query = "INSERT INTO Course_Module (courseId, moduleId) VALUES(" + courseId + "," + moduleId + ");";
-                //string query2 = "INSERT dbo.Course_Module (courseId, moduleId) SELECT " + courseId + "," + moduleId + " WHERE NOT EXISTS( SELECT courseId, moduleId FROM dbo.Course_Module WHERE courseId = " + courseId + " AND moduleId = " + moduleId + ");";
-
-                //"INSERT INTO dbo.Timetable (courseId, moduleId, roomId, day, time) VALUES(@courseId, @moduleId, @roomId, @day, @time);"
-                //INSERT dbo.Timetable(courseId, moduleId, roomId, day, time) SELECT @courseId, @moduleId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, roomId, day, time FROM dbo.Timetable WHERE(courseId = @courseId AND moduleId = @moduleId) AND(roomId = @roomId AND day = @day AND time = @time));
+          
 
 
                 SqlConnection conn = new SqlConnection(dbConnectionString);
                 conn.Open();
 
+                // check if the room is being used by by the timetable at selected daya and time
                 SqlCommand checkRoom = new SqlCommand("SELECT COUNT(*) FROM dbo.timetable WHERE roomId= @roomId AND day = @day AND time = @time;", conn);
                 checkRoom.Parameters.AddWithValue("@roomId", roomId);
                 checkRoom.Parameters.AddWithValue("@day", dayTextBox.Text);
@@ -142,6 +132,7 @@ namespace TimetableCreationTool
 
                 int roomBeingUsed = (int)checkRoom.ExecuteScalar();
 
+                // check if the lecturer is busy at the selected time and day
                 SqlCommand checkLecturer = new SqlCommand("SELECT COUNT(*) FROM dbo.Timetable WHERE lecturerId = @lecturerId and day = @day AND time = @time;", conn);
                 checkLecturer.Parameters.AddWithValue("@lecturerId", lecturerId);
                 checkLecturer.Parameters.AddWithValue("@day", dayTextBox.Text);
@@ -159,6 +150,7 @@ namespace TimetableCreationTool
                 }
                 else
                 {
+                    // insert timeslot to the timetable table
                     SqlCommand command = new SqlCommand("INSERT dbo.Timetable(courseId, moduleId, lecturerId, roomId, day, time) SELECT @courseId, @moduleId, @lecturerId, @roomId, @day, @time WHERE NOT EXISTS(SELECT courseId, moduleId, lecturerId, roomId, day, time FROM dbo.Timetable WHERE(roomId = @roomId AND day = @day AND time = @time));", conn);
                     command.Parameters.AddWithValue("@courseId", courseId);
                     command.Parameters.AddWithValue("@moduleId", moduleId);
@@ -168,8 +160,7 @@ namespace TimetableCreationTool
                     command.Parameters.AddWithValue("@lecturerId", lecturerId);
                     int numOfRowsEffected = command.ExecuteNonQuery();
 
-                    //command.ExecuteNonQuery();
-                    //MessageBox.Show(numOfRowsEffected.ToString());
+                    
                     conn.Close();
                     if (numOfRowsEffected == 0)
                     {
@@ -191,13 +182,16 @@ namespace TimetableCreationTool
 
         }
 
+        // event handler for the cancel button 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        // event handler for the lecturer combo box opening
         private void lecturercomboBox_DropDownOpened(object sender, EventArgs e)
         {
+            // if module combo box is not null, bind the lecturer combobox to the table data
             if(moduleCombobox.SelectedItem != null)
             {
                 bindComboBox2(lecturercomboBox);
@@ -215,7 +209,7 @@ namespace TimetableCreationTool
         }
 
        
-
+        // event handler for a seection changed module box
         private void moduleCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lecturercomboBox.SelectedItem != null)
@@ -224,6 +218,7 @@ namespace TimetableCreationTool
             }
         }
 
+        //event handler for the module combobox being opened
         private void moduleCombobox_DropDownOpened(object sender, EventArgs e)
         {
             if (moduleCombobox.Items.Count == 0)
@@ -232,6 +227,7 @@ namespace TimetableCreationTool
             }
         }
 
+        //event handler for the module combobox being opened
         private void roomCombobox_DropDownOpened(object sender, EventArgs e)
         {
             if (roomCombobox.Items.Count == 0)

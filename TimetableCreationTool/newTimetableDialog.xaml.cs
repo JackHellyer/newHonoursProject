@@ -27,11 +27,13 @@ namespace TimetableCreationTool
         public void createTimetable_Click(object sender, RoutedEventArgs e)
         {
             string timetableName = timetableNameTextBox.Text;
-            
+            // checks to see if the chosen timetable name exists
             bool exists = System.IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Timetable App/" + timetableNameTextBox.Text);
             if(!exists)
             {
+                //if it doesn't exist create folder for timetable name
                 System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Timetable App/" + timetableNameTextBox.Text);
+                // open main window
                 Window1 win1 = new Window1(timetableName);
                 win1.Show();
                 this.Close();

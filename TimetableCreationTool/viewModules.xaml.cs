@@ -17,6 +17,8 @@ namespace TimetableCreationTool
     /// <summary>
     /// Interaction logic for viewModules.xaml
     /// </summary>
+    /// did'n't have time to add comments
+    /// this pages comments are the same as view course
     public partial class viewModules : Window
     {
         public viewModules()

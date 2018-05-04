@@ -30,25 +30,28 @@ namespace TimetableCreationTool
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.dbcontext = new timetableCreationEntities3();
+            // course lsit view source
             this.coursesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("coursesViewSource")));
 
-
+            // refresh listview
             refreshListView();
             
 
             
         }
-
+        // method to refresh listview
         private void refreshListView()
         {
+            //linq query to return all of the courses
             var query = from Course in this.dbcontext.Courses
                         orderby Course.courseCode
                         select Course;
             this.coursesViewSource.Source = query.ToList();
         }
+        // on delete get 
         private void OnDelete(object sender, RoutedEventArgs e)
         {
-
+            // list view selected item
             object selected = this.coursesListView.SelectedItem;
 
             if (selected == null)
@@ -60,12 +63,14 @@ namespace TimetableCreationTool
             {
                 try
                 {
+                    // cast selected item object to Course and then remove
                     this.dbcontext.Courses.Remove((Course)selected);
                     this.dbcontext.SaveChanges();
                     refreshListView();
                 }
                 catch (Exception ex)
                 {
+                    //validation this would ideally be improved
                     //MessageBox.Show(ex.ToString());
                     MessageBox.Show("Can't delete course as it's being used by a timetable");
                 }

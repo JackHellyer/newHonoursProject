@@ -27,19 +27,23 @@ namespace TimetableCreationTool
             InitializeComponent();
         }
 
+        // on save event handler
         private void OnSave(object sender, RoutedEventArgs e)
         {
+            // assign user inputs to strings
             string courseCode = courseCodeTextbox.Text;
             string courseName = courseNameTextbox.Text;
             string noOfStudentsString = noOfStudentsTextbox.Text;
-
+            // if all inputs are not empty
             if (courseCode != "" && courseName != "" && noOfStudentsString != "")
             {
                 int noOfStudents;
+                // validation i keeping with sql table structure
                 if (courseCode.Length < 16 && courseName.Length < 76 && int.TryParse(noOfStudentsString, out noOfStudents))
                 {
                     SqlConnection conn = new SqlConnection(dbConnectionString);
                     conn.Open();
+                    // insert a course
                     SqlCommand command = new SqlCommand("INSERT INTO dbo.courseTemp(courseCode, courseName, noOfStudents) values(@courseCode, @courseName, @noOfStudents);", conn);
                     command.Parameters.AddWithValue("@courseCode", courseCode);
                     command.Parameters.AddWithValue("@courseName", courseName);
@@ -47,11 +51,12 @@ namespace TimetableCreationTool
 
 
                     command.ExecuteNonQuery();
-
+                    // if a row is added 
                     int number = selectIntoDistinct("INSERT dbo.Course(courseCode,courseName,noOfStudents) SELECT courseCode,courseName,noOfStudents FROM dbo.courseTemp ct WHERE not exists(SELECT * FROM dbo.Course c WHERE ct.courseCode = c.courseCode);");
 
                     if (number == 1)
                     {
+                        // delete course temp data
                         this.Close();
                         truncateTempAfterInsert("TRUNCATE TABLE dbo.courseTemp;");
                     }
@@ -79,32 +84,27 @@ namespace TimetableCreationTool
 
 
         }
-
+        
         public int selectIntoDistinct(string query)
         {
-            //string queryString = "INSERT dbo.Room(roomCode,capacity,lab) SELECT roomCode,capacity,lab FROM dbo.roomTemp rt WHERE not exists(SELECT * FROM dbo.Room r WHERE rt.roomCode = r.roomCode);";
+           
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
                 SqlCommand command = new SqlCommand(query, dbConnection);
                 dbConnection.Open();
                 int numberOfChanges = command.ExecuteNonQuery();
-                //MessageBox.Show(numberOfChanges.ToString());
-
-                //SqlDataReader reader = command.ExecuteReader();               
-                /*
-                int numOfRows = command.ExecuteNonQuery();
-                MessageBox.Show(numOfRows.ToString());*/
+               
                 dbConnection.Close();
                 return numberOfChanges;
-                //return numOfRows;
+                
 
             }
         }
 
         public void truncateTempAfterInsert(string query)
         {
-            //string queryString = "TRUNCATE TABLE dbo.roomTemp;";
+            
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
             {
 
@@ -119,10 +119,7 @@ namespace TimetableCreationTool
             }
         }
 
-        private void courseCodeTextbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
 }
 

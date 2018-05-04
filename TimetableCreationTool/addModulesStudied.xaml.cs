@@ -130,8 +130,10 @@ namespace TimetableCreationTool
             checkModulebeingused.Parameters.AddWithValue("@courseId", cId);
             checkModulebeingused.Parameters.AddWithValue("@moduleId", mId);
 
+            // int number times the module is used in the Timetable Table
             int moduleBeingUsed = (int)checkModulebeingused.ExecuteScalar();
 
+            // if it's greater than zero can't delete as it's being used
             if(moduleBeingUsed > 0)
             {
                 MessageBox.Show("can't delete module as it's being used by current course");
@@ -144,7 +146,7 @@ namespace TimetableCreationTool
                 SqlCommand command = new SqlCommand(query, conn);
                 command.ExecuteNonQuery();
                 
-
+                // refresh listview
                 onRefresh();
               
             }

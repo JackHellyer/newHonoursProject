@@ -97,13 +97,15 @@ namespace TimetableCreationTool
         public void onRefresh()
         {
             this.dbcontext = new timetableCreationEntities3();
+            // list view source
             this.moduleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("moduleViewSource")));
+
             if(lecturerComboBox.SelectedItem != null)
             {
                 int lecturerId = int.Parse(lecturerComboBox.SelectedValue.ToString());
 
                 
-
+                // Linq query to return all modules that exist for selected lecturer
                 var query = from Module in this.dbcontext.Modules
                             where Module.Lecturers.Any(l => l.lecturerId == lecturerId)
                             orderby Module.moduleName
@@ -113,6 +115,7 @@ namespace TimetableCreationTool
             
         }
 
+        // delete button handler
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             object selected = this.moduleListView.SelectedItem;
@@ -125,6 +128,8 @@ namespace TimetableCreationTool
 
             }
             int mId = module.moduleId;
+            
+            // 
             int lecturerId = int.Parse(lecturerComboBox.SelectedValue.ToString());
             SqlConnection conn = new SqlConnection(dbConnectionString);
             conn.Open();
@@ -134,8 +139,10 @@ namespace TimetableCreationTool
             checkModulebeingTaught.Parameters.AddWithValue("@lecturerId", lecturerId);
             checkModulebeingTaught.Parameters.AddWithValue("@moduleId", mId);
 
+            // if the lecturer is teaching a currently teaching a class
             int LecturerTeachingModule = (int)checkModulebeingTaught.ExecuteScalar();
 
+           
             if (LecturerTeachingModule > 0)
             {
                 MessageBox.Show("can't delete module as it's being taught by current lecturer");
@@ -148,11 +155,12 @@ namespace TimetableCreationTool
                 SqlCommand command = new SqlCommand(query, conn);
                 command.ExecuteNonQuery();
 
-
+                // refresh listview
                 onRefresh();
 
             }
 
+            // close sql connection
             conn.Close();
         }
     }

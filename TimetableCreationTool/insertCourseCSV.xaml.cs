@@ -29,14 +29,18 @@ namespace TimetableCreationTool
             timetableName = tName;
         }
 
+        // users my documents folder path
         public string userMyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        // sql connection string
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
 
+        // method used to open the course CSV file
         public void openExternalCSVFile_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "courses.txt");
         }
 
+        // method to upload the data from the csv file to the database
         public void uploadCsvData_Click(object sender, RoutedEventArgs e)
         {
             DataTable csvData = getDataTableCSVFile(userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + "courses.txt");
@@ -46,6 +50,7 @@ namespace TimetableCreationTool
             this.Close();
         }
 
+        // returns datatable takes in the file path of the csv file
         public DataTable getDataTableCSVFile(string filePath)
         {
 
@@ -66,7 +71,7 @@ namespace TimetableCreationTool
                     while (!csvReader.EndOfData)
                     {
                         string[] fieldData = csvReader.ReadFields();
-                        // making empty value as null
+                        
                         for (int i = 0; i < fieldData.Length; i++)
                         {
                             if (fieldData[i] == "")
@@ -91,7 +96,7 @@ namespace TimetableCreationTool
             return csvData;
         }
 
-
+        // insert datatable to the database takes iin datatable, returns bool for use on the main window to check if the insert was successful
         public bool InsertDataTableToSQL(DataTable csvFileData)
         {
             using (SqlConnection dbConnection = new SqlConnection(dbConnectionString))
@@ -103,7 +108,7 @@ namespace TimetableCreationTool
                 {
                     try
                     {
-                        //MessageBox.Show("connection success");
+                        
                         using (SqlBulkCopy sbc = new SqlBulkCopy(dbConnection))
                         {
                             // change this method later to have a string parameter which will hold the destination table
@@ -140,6 +145,7 @@ namespace TimetableCreationTool
             }
         }
 
+        // copy distinct rows from the courseTemp table to the real course table
         public void selectIntoDistinct()
         {
             string queryString = "INSERT dbo.Course(courseCode,courseName,noOfStudents) SELECT courseCode,courseName,noOfStudents FROM dbo.courseTemp ct WHERE not exists(SELECT * FROM dbo.Course c WHERE ct.courseCode = c.courseCode);";
@@ -156,6 +162,8 @@ namespace TimetableCreationTool
 
             }
         }
+
+        // truncate
         public void truncateTempAfterCSVInsert()
         {
             string queryString = "TRUNCATE TABLE dbo.courseTemp;";
@@ -164,7 +172,7 @@ namespace TimetableCreationTool
 
                 SqlCommand command = new SqlCommand(queryString, dbConnection);
                 dbConnection.Open();
-
+                // delete the sql datareader later
                 SqlDataReader reader = command.ExecuteReader();
 
                 dbConnection.Close();

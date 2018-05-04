@@ -26,7 +26,8 @@ namespace TimetableCreationTool
         {
             InitializeComponent();
         }
-
+        // same as menu insert course comments
+        // didn't have time to add comments
         private void OnSave(object sender, RoutedEventArgs e)
         {
             string lecturerCode = lecturerCodeTextbox.Text;

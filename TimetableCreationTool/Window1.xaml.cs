@@ -45,9 +45,10 @@ namespace TimetableCreationTool
         }
         
       
-        
+        // menu save clicl event handler
         public void menuSave_Click(object sender, RoutedEventArgs e)
         {
+            // save all the db table to csv files
             saveDbToCSVFile("roomCode,capacity, lab", "rooms.txt", "dbo.Room");
             saveDbToCSVFile("lecturerCode,lecturerName,lecturerDept", "lecturers.txt", "dbo.Lecturer");
             saveDbToCSVFile("courseCode,courseName,noOfStudents", "courses.txt", "dbo.Course");
@@ -57,7 +58,7 @@ namespace TimetableCreationTool
 
         }
 
-       
+       // exit click event handler
         public void menuExit_Click(object sender, RoutedEventArgs e)
         {
             
@@ -65,6 +66,7 @@ namespace TimetableCreationTool
 
         }
 
+        // event handler for menu view rooms 
         public void menuViewRooms_Click(object sender, RoutedEventArgs e)
         {
             viewRooms vr = new viewRooms();
@@ -73,6 +75,7 @@ namespace TimetableCreationTool
             //Window_Loaded(sender, e);
         }
 
+        // event handler for menu view lecturers
         public void menuViewLecturers_Click(object sender, RoutedEventArgs e)
         {
             viewLecturers vl = new viewLecturers();
@@ -80,6 +83,7 @@ namespace TimetableCreationTool
             vl.ShowDialog();
         }
 
+        // event habdler for menu view courses
         public void menuViewCourses_Click(object sender, RoutedEventArgs e)
         {
             viewCourses vc = new viewCourses();
@@ -88,6 +92,7 @@ namespace TimetableCreationTool
 
         }
 
+        // event handler for view modules menu
         public void menuViewModules_Click(object sender, RoutedEventArgs e)
         {
             viewModules vm = new viewModules();
@@ -95,11 +100,13 @@ namespace TimetableCreationTool
             vm.ShowDialog();
         }
 
+        // event handler for menu insert room
         private void menuInsertRoomCSV_Click(object Sender, RoutedEventArgs e)
         {
             
             insertRoomCsv irc = new insertRoomCsv(timetableName);
             irc.Owner = this;
+            // creates example csv file and writes to column headings
             string fileName = "rooms.txt";
             string tableColumns = "roomCode,capacity,lab";
             createExampleCSVFile(fileName, tableColumns);
@@ -109,6 +116,7 @@ namespace TimetableCreationTool
 
         }
 
+        // event handler for menu insert room form
         private void menuInsertRoomForm_Click(object sender, RoutedEventArgs e)
         {
             menuInsertRoom_Form addRoom = new menuInsertRoom_Form();
@@ -117,7 +125,7 @@ namespace TimetableCreationTool
             
     
         }
-
+        // event handler for menu insert module form
         private void menuInsertModuleForm_Click(object sender, RoutedEventArgs e)
         {
             menuInsertModule_Form addModule = new menuInsertModule_Form();
@@ -127,7 +135,7 @@ namespace TimetableCreationTool
 
 
         }
-
+        // event handler for menu insert course form
         private void menuInsertCourseForm_Click(object sender, RoutedEventArgs e)
         {
             menuInsertCourse_Form addCourse = new menuInsertCourse_Form();
@@ -137,7 +145,7 @@ namespace TimetableCreationTool
             bindComboBox(chooseCourse);
 
         }
-
+        // event handler for menu insert lecturer form
         private void menuInsertLecturerForm_Click(object sender, RoutedEventArgs e)
         {
             menuInsertLecturer_Form addLecturer = new menuInsertLecturer_Form();
@@ -149,17 +157,19 @@ namespace TimetableCreationTool
         }
 
 
-
+        // event handler for menu lecturer insert csv
         private void menuLecturersCSV_Click(object sender, RoutedEventArgs e)
         {
             insertLecturerCSV ilc = new insertLecturerCSV(timetableName);
             ilc.Owner = this;
+            // create example file
             string fileName = "lecturers.txt";
             string tableColumns = "lecturerCode,lecturerName,lecturerDept";
             createExampleCSVFile(fileName, tableColumns);
             ilc.ShowDialog();
         }
 
+        // same as lecturer above but for course csv menu
         public void menuCoursesCSV_Click(object sender, RoutedEventArgs e)
         {
             insertCourseCSV icc = new insertCourseCSV(timetableName);
@@ -172,7 +182,7 @@ namespace TimetableCreationTool
             bindComboBox(chooseCourse);
 
         }
-
+        // same as above but for insert module csv
         public void menuModulesCSV_Click(object sender, RoutedEventArgs e)
         {
             insertModuleCSV imc = new insertModuleCSV(timetableName);
@@ -183,13 +193,15 @@ namespace TimetableCreationTool
             imc.ShowDialog();
         }
 
+        // save database table data to csv file, takes in fname for the path
         public void saveDbToCSVFile(string columns, string fName, string tableName)
         {
             SqlConnection dbConnection = new SqlConnection(dbConnectionString);
             dbConnection.Open();
             
-            //string command = "SELECT" + 
+            // select rooms is the wrong variable name
             SqlCommand selectRooms = new SqlCommand("SELECT " + columns + " FROM " + tableName + ";", dbConnection);
+            
             SqlDataReader sdr = selectRooms.ExecuteReader();
 
             string fileName = userMyDocumentsPath + "/Timetable App/" + timetableName + "/" + fName;
@@ -211,11 +223,11 @@ namespace TimetableCreationTool
             sdr.Close();
             dbConnection.Close();
         }
-
+        // create new datatable used for datagrid
         DataTable dt = new DataTable();
         public void createDatatable(object sender, RoutedEventArgs e)
         {
-            
+            // add columns and rows
             dt.Columns.Add("DayName");
             dt.Columns.Add("08:00");
             dt.Columns.Add("09:00");
@@ -249,9 +261,11 @@ namespace TimetableCreationTool
             dr5["DayName"] = "Friday";
             dt.Rows.Add(dr5);
 
+            // set the datagridview source
             dataGrid.ItemsSource = dt.DefaultView;
         }
 
+        // bindcombo box to course table data
         public void bindComboBox(ComboBox comboBoxName)
         {
             string query = "select courseId, courseName from dbo.Course ORDER BY courseCode";
@@ -267,7 +281,7 @@ namespace TimetableCreationTool
         }
 
        
-
+        //method to create csv file based on the params
         public void createExampleCSVFile(string fileName, string tableColumns)
         {
             string pathToCreateCSVFile = userMyDocumentsPath + "/Timetable App/" + timetableName +"/" + fileName;
@@ -279,6 +293,7 @@ namespace TimetableCreationTool
                 {
                     using (FileStream fs = File.Create(pathToCreateCSVFile))
                     {
+                        // write the table columns in the first line
                         Byte[] info = new UTF8Encoding(true).GetBytes(tableColumns);
                         fs.Write(info, 0, info.Length);
 
@@ -296,8 +311,10 @@ namespace TimetableCreationTool
 
         }
 
+        // event handler for windw closing
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            // allow the user to save befoe exiting
             MessageBoxResult result = MessageBox.Show("Do you want to save before exiting", "Exit", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {
@@ -316,7 +333,7 @@ namespace TimetableCreationTool
         }
 
         
-
+        // event handler for when the drop down menu closes
         private void chooseCourse_DropDownClosed(object sender, EventArgs e)
         {
             
@@ -353,10 +370,11 @@ namespace TimetableCreationTool
                 string tableColumns = "courseId,moduleId";
                 createExampleCSVFile(fileName, tableColumns);
 
+                // opne edit modules window
                 addModulesStudied ams = new addModulesStudied(chooseCourse.Text, chooseCourse.SelectedValue.ToString());
                 ams.Owner = this;
                 ams.ShowDialog();
-
+                // refresh data grid after selcting course
                 refreshDatagrid();
                 
             }
@@ -364,18 +382,20 @@ namespace TimetableCreationTool
 
 
         }
-
+        
+        // refresh datagrid
         private void refreshDatagrid()
         {
             string day;
             string time;
 
 
-
+            // loops through the datatable
             foreach (DataRow dr in dt.Rows)
             {
                 foreach (DataColumn dc in dt.Columns)
                 {
+                    // if the selected 
                     if ((dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                     {
                         dr[dc] = "";
@@ -403,7 +423,7 @@ namespace TimetableCreationTool
                                     mName = reader.GetString(reader.GetOrdinal("moduleName"));
                                     rCode = reader.GetString(reader.GetOrdinal("roomCode"));
                                     lName = reader.GetString(reader.GetOrdinal("lecturerName"));
-                                //line below inserts into cell
+                                //line below inserts sql table data into cell
                                 
                                     dr[dc] = " Module: " + mName + "\n Room:    " + rCode + "\n Lecturer: " + lName;
                                     
@@ -426,7 +446,7 @@ namespace TimetableCreationTool
             }
         }
       
-
+        // event handler for selected cell chnage datagrid
         private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
 
@@ -446,26 +466,31 @@ namespace TimetableCreationTool
                         string cId = chooseCourse.SelectedValue.ToString();
                         string day2;
                         string time;
+                        // loops through the datatable
                         foreach (DataRow dr in dt.Rows)
                         {
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 day2 = dr[0].ToString();
                                 time = dc.ColumnName.ToString();
+                                // the datatable day and datatable time is equal and the is no data in the cell
                                 if ((day2 == day) && (time == timeString) && (dr[dc].ToString() == ""))
                                 {
+                                    // open insert timeslot window
                                     insertTimetable it = new insertTimetable(day, timeString, cId, cName);
                                     it.Owner = this;
                                     it.ShowDialog();
+                                    // refresh datagrid after timeslot insert
                                     refreshDatagrid();
                                 }
-
+                                // esle if the datacell contians data
                                 else if((day2 == day) && (time == timeString) && (dr[dc].ToString() != "") && (dr[dc].ToString() != "Monday") && (dr[dc].ToString() != "Tuesday") && (dr[dc].ToString() != "Wednesday") && (dr[dc].ToString() != "Thursday") && (dr[dc].ToString() != "Friday"))
                                 {
+                                    // load edit timeslot window
                                     editTimetable editTtable = new editTimetable(day, timeString, cId, cName);
                                     editTtable.Owner = this;
                                     editTtable.ShowDialog();
-                                 
+                                    // refresh datagrid after edited timeslot
                                     refreshDatagrid();
 
                                 }
@@ -490,15 +515,17 @@ namespace TimetableCreationTool
 
             }
         }
-
+        // event handler for assign modules that are taught be a lecturer
         private void assignLecturerButton_Click(object sender, RoutedEventArgs e)
         {
             assignLecturer_Module alm = new assignLecturer_Module();
             alm.Owner = this;
             alm.ShowDialog();
+            // create example text file to hold csv data 
             createExampleCSVFile("lecturermodules.txt", "lecturerId, moduleId");
         }
 
+        // event handler if the course combob box contains no courses
         private void chooseCourse_DropDownOpened(object sender, EventArgs e)
         {
             if(chooseCourse.Items.Count == 0)

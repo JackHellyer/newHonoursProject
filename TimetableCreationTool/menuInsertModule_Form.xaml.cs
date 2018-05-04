@@ -19,7 +19,8 @@ namespace TimetableCreationTool
     /// Interaction logic for menuInsertModule_Form.xaml
     /// </summary>
     /// 
-
+    // same as menu insert course comments
+    // didn't have time to add comments
     public partial class menuInsertModule_Form : Window
     {
         private string dbConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB;  Initial Catalog = timetableCreation; Integrated Security = True; Connect Timeout = 30";
